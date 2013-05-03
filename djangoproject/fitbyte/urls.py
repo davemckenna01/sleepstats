@@ -6,6 +6,9 @@ from django.conf.urls import patterns, include, url
 
 urlpatterns = patterns('',
     url(r'^$', 'fitbyte.views.home', name='home'),
+
+    url(r'^get-token$', 'fitbyte.views.get_token', name='get_token'),
+
     url(r'^fitbit/', include('apps.fitbit.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
