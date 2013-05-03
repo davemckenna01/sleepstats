@@ -1,1 +1,2 @@
 svn+http://oauth.googlecode.com/svn/code/python/
+Django
