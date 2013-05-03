@@ -38,21 +38,27 @@ PORT = 8000
 
 # fake urls for the test server (matches ones in server.py)
 # REQUEST_TOKEN_URL = 'https://photos.example.net/request_token'
-REQUEST_TOKEN_URL = 'http://api.fitbit.com/oauth/request_token'
+# REQUEST_TOKEN_URL = 'https://api.fitbit.com/oauth/request_token'
+REQUEST_TOKEN_URL = 'https://api.twitter.com/oauth/request_token'
 
 # ACCESS_TOKEN_URL = 'https://photos.example.net/access_token'
-ACCESS_TOKEN_URL = 'http://api.fitbit.com/oauth/access_token'
+# ACCESS_TOKEN_URL = 'https://api.fitbit.com/oauth/access_token'
+ACCESS_TOKEN_URL = 'https://api.twitter.com/oauth/access_token'
 
 # AUTHORIZATION_URL = 'https://photos.example.net/authorize'
-AUTHORIZATION_URL = 'http://www.fitbit.com/oauth/authorize'
+# AUTHORIZATION_URL = 'https://www.fitbit.com/oauth/authorize'
+AUTHORIZATION_URL = 'https://api.twitter.com/oauth/authorize'
 
-CALLBACK_URL = 'http://printer.example.com/request_token_ready'
+CALLBACK_URL = 'http://fitbyte.herokuapp.com/request_token_ready'
 
-RESOURCE_URL = 'http://photos.example.net/photos'
+RESOURCE_URL = 'http://api.twitter.net/photos'
 
 # key and secret granted by the service provider for this consumer application - same as the MockOAuthDataStore
-CONSUMER_KEY = os.environ['FITBIT_CONSUMER_KEY']
-CONSUMER_SECRET = os.environ['FITBIT_CONSUMER_SECRET']
+# CONSUMER_KEY = os.environ['FITBIT_CONSUMER_KEY']
+# CONSUMER_SECRET = os.environ['FITBIT_CONSUMER_SECRET']
+
+CONSUMER_KEY = os.environ['TWITTER_CONSUMER_KEY']
+CONSUMER_SECRET = os.environ['TWITTER_CONSUMER_SECRET']
 
 print CONSUMER_KEY
 print CONSUMER_SECRET
