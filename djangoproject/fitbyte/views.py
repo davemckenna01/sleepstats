@@ -1,4 +1,6 @@
 from django.http import HttpResponse
+from django.shortcuts import render
 
 def home(request):
-    return HttpResponse("Hello, world. Welcome to FitByte.")
+	context = {'greeting': 'Shut Up.'}
+	return render(request, 'home.html', context)	
