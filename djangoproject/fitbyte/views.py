@@ -3,15 +3,10 @@ from django.shortcuts import render
 
 import urlparse
 import oauth2 as oauth
+import httplib2
 import urllib
 import os
-
-# consumer_key = os.environ['TWITTER_CONSUMER_KEY']
-# consumer_secret = os.environ['TWITTER_CONSUMER_SECRET']
-
-# request_token_url = 'http://api.twitter.com/oauth/request_token'
-# access_token_url = 'http://api.twitter.com/oauth/access_token'
-# authorize_url = 'http://api.twitter.com/oauth/authorize'
+import time
 
 request_token_url = 'http://api.fitbit.com/oauth/request_token'
 access_token_url = 'http://api.fitbit.com/oauth/access_token'
@@ -77,6 +72,64 @@ def authorize_fitbit_complete(request):
     print
     print "You may now access protected resources using the access tokens above." 
     print
+
+
+    # Set the API endpoint 
+    url = "http://api.fitbit.com/1/user/davemckenna01/body/date/2013-05-03.json"
+
+    # Set the base oauth_* parameters along with any other parameters required
+    # for the API call.
+    params = {
+        'oauth_version': "1.0",
+        'oauth_nonce': oauth.generate_nonce(),
+        'oauth_timestamp': int(time.time()),
+    }
+
+    # Set up instances of our Token and Consumer. The Consumer.key and 
+    # Consumer.secret are given to you by the API provider. The Token.key and
+    # Token.secret is given to you after a three-legged authentication.
+    token = oauth.Token(key=access_token['oauth_token'],
+                        secret=access_token['oauth_token_secret'])
+    consumer_after_auth = oauth.Consumer(key=consumer_key,
+                                         secret=consumer_secret)
+
+    # Set our token/key parameters
+    params['oauth_token'] = token.key
+    params['oauth_consumer_key'] = consumer_after_auth.key
+
+    # Create our request. Change method, etc. accordingly.
+    req = oauth.Request(method="GET", url=url, parameters=params)
+
+    # Sign the request.
+    signature_method = oauth.SignatureMethod_HMAC_SHA1()
+    req.sign_request(signature_method, consumer_after_auth, token) 
+
+    h = httplib2.Http()
+    resp, content = h.request(req.to_url(), 'GET', headers=req.to_header())
+
+    print resp
+    print content
+
+    # # !!!!!!!!!!!!!!!!
+    # # there's gotta be a better way to do the below crap... isn't this in the
+    # # oauth2 lib?!?!
+
+    # h = httplib2.Http()
+    # resp, content = h.request(url, 'GET',
+    #     headers = {
+    #         'Authorization': "OAuth",
+    #         'oauth_consumer_key': req['oauth_consumer_key'],
+    #         'oauth_token': req['oauth_token'],
+    #         'oauth_nonce': req['oauth_nonce'],
+    #         'oauth_signature': req['oauth_signature'],
+    #         'oauth_signature_method': req['oauth_signature_method'],
+    #         # 'oauth_timestamp': req['oauth_timestamp'],
+    #         # 'oauth_version': req['oauth_version'],
+    #     }
+    # )
+
+    # print resp
+    # print content
 
     context = {}
     return render(request, 'get_token.html', context)
