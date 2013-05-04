@@ -7,7 +7,12 @@ from django.conf.urls import patterns, include, url
 urlpatterns = patterns('',
     url(r'^$', 'fitbyte.views.home', name='home'),
 
-    url(r'^get-token$', 'fitbyte.views.get_token', name='get_token'),
+    url(r'^authorize-fitbit$', 'fitbyte.views.authorize_fitbit',
+    					name='authorize-fitbit'),
+
+    url(r'^authorize-fitbit-complete$',
+    	'fitbyte.views.authorize_fitbit_complete',
+    	name='authorize-fitbit-complete'),
 
     url(r'^fitbit/', include('apps.fitbit.urls')),
 

@@ -1,41 +1,46 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+
+import urlparse
+import oauth2 as oauth
+import os
+
+# consumer_key = os.environ['TWITTER_CONSUMER_KEY']
+# consumer_secret = os.environ['TWITTER_CONSUMER_SECRET']
+
+# request_token_url = 'http://api.twitter.com/oauth/request_token'
+# access_token_url = 'http://api.twitter.com/oauth/access_token'
+# authorize_url = 'http://api.twitter.com/oauth/authorize'
+
+request_token_url = 'http://api.fitbit.com/oauth/request_token'
+access_token_url = 'http://api.fitbit.com/oauth/access_token'
+authorize_url = 'http://www.fitbit.com/oauth/authorize'
+
+oauth_callback = 'http://localhost:8000/authorize-fitbit-complete'
+
+consumer_key = os.environ['FITBIT_CONSUMER_KEY']
+consumer_secret = os.environ['FITBIT_CONSUMER_SECRET']
+
+# two necessary globals
+consumer = oauth.Consumer(consumer_key, consumer_secret)
+request_token = dict()
 
 def home(request):
 	context = {'greeting': 'Shut Up.'}
 	return render(request, 'home.html', context)
 
-def get_token(request):
-
-    import urlparse
-    import oauth2 as oauth
-    import os
-
-    # consumer_key = os.environ['TWITTER_CONSUMER_KEY']
-    # consumer_secret = os.environ['TWITTER_CONSUMER_SECRET']
-
-    # request_token_url = 'http://api.twitter.com/oauth/request_token'
-    # access_token_url = 'http://api.twitter.com/oauth/access_token'
-    # authorize_url = 'http://api.twitter.com/oauth/authorize'
-
-    consumer_key = os.environ['FITBIT_CONSUMER_KEY']
-    consumer_secret = os.environ['FITBIT_CONSUMER_SECRET']
-
-    request_token_url = 'http://api.fitbit.com/oauth/request_token'
-    access_token_url = 'http://api.fitbit.com/oauth/access_token'
-    authorize_url = 'http://www.fitbit.com/oauth/authorize'
-
-    consumer = oauth.Consumer(consumer_key, consumer_secret)
-    client = oauth.Client(consumer)
-
+def authorize_fitbit(request):
     # Step 1: Get a request token. This is a temporary token that is used for 
     # having the user authorize an access token and to sign the request to obtain 
     # said access token.
+
+    client = oauth.Client(consumer)
 
     resp, content = client.request(request_token_url, "GET")
     if resp['status'] != '200':
         raise Exception("Invalid response %s." % resp['status'])
 
+    global request_token
     request_token = dict(urlparse.parse_qsl(content))
 
     print "Request Token:"
@@ -47,26 +52,18 @@ def get_token(request):
     # redirect. In a web application you would redirect the user to the URL
     # below.
 
-    print "Go to the following link in your browser:"
-    print "%s?oauth_token=%s" % (authorize_url, request_token['oauth_token'])
-    print 
+    return HttpResponseRedirect("%s?oauth_token=%s" % 
+                                (authorize_url, request_token['oauth_token']))
 
-    # After the user has granted access to you, the consumer, the provider will
-    # redirect you to whatever URL you have told them to redirect to. You can 
-    # usually define this in the oauth_callback argument as well.
-    accepted = 'n'
-    while accepted.lower() == 'n':
-        accepted = raw_input('Have you authorized me? (y/n) ')
-    oauth_verifier = raw_input('What is the PIN? ')
-
+def authorize_fitbit_complete(request):
     # Step 3: Once the consumer has redirected the user back to the oauth_callback
     # URL you can request the access token the user has approved. You use the 
     # request token to sign this request. After this is done you throw away the
     # request token and use the access token returned. You should store this 
     # access token somewhere safe, like a database, for future use.
     token = oauth.Token(request_token['oauth_token'],
-        request_token['oauth_token_secret'])
-    token.set_verifier(oauth_verifier)
+                        request_token['oauth_token_secret'])
+    token.set_verifier(request.GET['oauth_verifier'])
     client = oauth.Client(consumer, token)
 
     resp, content = client.request(access_token_url, "POST")
@@ -81,5 +78,3 @@ def get_token(request):
 
     context = {}
     return render(request, 'get_token.html', context)
-
-
