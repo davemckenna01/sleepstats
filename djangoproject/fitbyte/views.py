@@ -3,6 +3,7 @@ from django.shortcuts import render
 
 import urlparse
 import oauth2 as oauth
+import urllib
 import os
 
 # consumer_key = os.environ['TWITTER_CONSUMER_KEY']
@@ -36,7 +37,8 @@ def authorize_fitbit(request):
 
     client = oauth.Client(consumer)
 
-    resp, content = client.request(request_token_url, "GET")
+    resp, content = client.request(request_token_url, "POST",
+                    body=urllib.urlencode({'oauth_callback':oauth_callback}))
     if resp['status'] != '200':
         raise Exception("Invalid response %s." % resp['status'])
 
