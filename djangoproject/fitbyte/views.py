@@ -11,12 +11,19 @@ def get_token(request):
     import oauth2 as oauth
     import os
 
-    consumer_key = os.environ['TWITTER_CONSUMER_KEY']
-    consumer_secret = os.environ['TWITTER_CONSUMER_SECRET']
+    # consumer_key = os.environ['TWITTER_CONSUMER_KEY']
+    # consumer_secret = os.environ['TWITTER_CONSUMER_SECRET']
 
-    request_token_url = 'http://api.twitter.com/oauth/request_token'
-    access_token_url = 'http://api.twitter.com/oauth/access_token'
-    authorize_url = 'http://api.twitter.com/oauth/authorize'
+    # request_token_url = 'http://api.twitter.com/oauth/request_token'
+    # access_token_url = 'http://api.twitter.com/oauth/access_token'
+    # authorize_url = 'http://api.twitter.com/oauth/authorize'
+
+    consumer_key = os.environ['FITBIT_CONSUMER_KEY']
+    consumer_secret = os.environ['FITBIT_CONSUMER_SECRET']
+
+    request_token_url = 'http://api.fitbit.com/oauth/request_token'
+    access_token_url = 'http://api.fitbit.com/oauth/access_token'
+    authorize_url = 'http://www.fitbit.com/oauth/authorize'
 
     consumer = oauth.Consumer(consumer_key, consumer_secret)
     client = oauth.Client(consumer)
