@@ -1,5 +1,6 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+from fitbyte.settings import API_CONFIG
 
 import urlparse
 import oauth2 as oauth
@@ -10,21 +11,15 @@ import time
 import pprint
 import json
 
-request_token_url = 'http://api.fitbit.com/oauth/request_token'
-access_token_url = 'http://api.fitbit.com/oauth/access_token'
-authorize_url = 'http://www.fitbit.com/oauth/authorize'
-
-oauth_callback = 'http://localhost:8000/authorize-fitbit-complete'
-
-consumer_key = os.environ['FITBIT_CONSUMER_KEY']
-consumer_secret = os.environ['FITBIT_CONSUMER_SECRET']
-
-# two necessary globals
-consumer = oauth.Consumer(consumer_key, consumer_secret)
+# necessary globals
+consumer = oauth.Consumer(API_CONFIG['FITBIT']['CONSUMER_KEY'],
+                          API_CONFIG['FITBIT']['CONSUMER_SECRET'])
 request_token = dict()
 
+session_access_token = dict()
+
 def home(request):
-	context = {'greeting': 'Shut Up.'}
+	context = {'message': 'You gotta authorize me to use your fitbit account.'}
 	return render(request, 'home.html', context)
 
 def authorize_fitbit(request):
@@ -34,8 +29,14 @@ def authorize_fitbit(request):
 
     client = oauth.Client(consumer)
 
-    resp, content = client.request(request_token_url, "POST",
-                    body=urllib.urlencode({'oauth_callback':oauth_callback}))
+    request_token_url = API_CONFIG['FITBIT']['REQUEST_TOKEN_URL']
+    request_body = urllib.urlencode({
+        'oauth_callback': API_CONFIG['FITBIT']['OAUTH_CALLBACK']
+    })
+
+    resp, content = client.request(request_token_url,
+                                   "POST", body=request_body)
+
     if resp['status'] != '200':
         raise Exception("Invalid response %s." % resp['status'])
 
@@ -51,8 +52,10 @@ def authorize_fitbit(request):
     # redirect. In a web application you would redirect the user to the URL
     # below.
 
-    return HttpResponseRedirect("%s?oauth_token=%s" % 
-                                (authorize_url, request_token['oauth_token']))
+    return HttpResponseRedirect(
+        "%s?oauth_token=%s" % 
+        (API_CONFIG['FITBIT']['AUTHORIZE_URL'], request_token['oauth_token'])
+    )
 
 def authorize_fitbit_complete(request):
     # Step 3: Once the consumer has redirected the user back to the oauth_callback
@@ -65,8 +68,12 @@ def authorize_fitbit_complete(request):
     token.set_verifier(request.GET['oauth_verifier'])
     client = oauth.Client(consumer, token)
 
-    resp, content = client.request(access_token_url, "POST")
+    resp, content = client.request(API_CONFIG['FITBIT']['ACCESS_TOKEN_URL'], "POST")
     access_token = dict(urlparse.parse_qsl(content))
+
+    global session_access_token
+    session_access_token = access_token
+
 
     print "Access Token:"
     print "    - oauth_token        = %s" % access_token['oauth_token']
@@ -75,10 +82,24 @@ def authorize_fitbit_complete(request):
     print "You may now access protected resources using the access tokens above." 
     print
 
+    context = {'message': 'OAuth handshaking complete.'}
+    return render(request, 'home.html', context)
 
-    # Set the API endpoint 
-    url = "http://api.fitbit.com/1/user/-/body/date/2013-05-03.json"
+def first_api_call(request):
+    url = "http://api.fitbit.com/1/user/-/body/date/2013-05-02.json"
 
+    resp, content = make_api_call(url)
+
+    pp = pprint.PrettyPrinter()
+
+    print pp.pprint(resp)
+    print pp.pprint(content)
+
+    context = content
+    return render(request, 'first_api_call.html', context)
+
+
+def make_api_call(url):
     # Set the base oauth_* parameters along with any other parameters required
     # for the API call.
     params = {
@@ -86,6 +107,11 @@ def authorize_fitbit_complete(request):
         'oauth_nonce': oauth.generate_nonce(),
         'oauth_timestamp': int(time.time()),
     }
+
+    access_token = session_access_token
+
+    consumer_key = API_CONFIG['FITBIT']['CONSUMER_KEY']
+    consumer_secret = API_CONFIG['FITBIT']['CONSUMER_SECRET']
 
     # Set up instances of our Token and Consumer. The Consumer.key and 
     # Consumer.secret are given to you by the API provider. The Token.key and
@@ -111,31 +137,4 @@ def authorize_fitbit_complete(request):
 
     content = json.loads(content)
 
-    pp = pprint.PrettyPrinter()
-
-    print pp.pprint(resp)
-    print pp.pprint(content)
-
-    # # !!!!!!!!!!!!!!!!
-    # # there's gotta be a better way to do the below crap... isn't this in the
-    # # oauth2 lib?!?!
-
-    # h = httplib2.Http()
-    # resp, content = h.request(url, 'GET',
-    #     headers = {
-    #         'Authorization': "OAuth",
-    #         'oauth_consumer_key': req['oauth_consumer_key'],
-    #         'oauth_token': req['oauth_token'],
-    #         'oauth_nonce': req['oauth_nonce'],
-    #         'oauth_signature': req['oauth_signature'],
-    #         'oauth_signature_method': req['oauth_signature_method'],
-    #         # 'oauth_timestamp': req['oauth_timestamp'],
-    #         # 'oauth_version': req['oauth_version'],
-    #     }
-    # )
-
-    # print resp
-    # print content
-
-    context = {}
-    return render(request, 'get_token.html', context)
+    return resp, content

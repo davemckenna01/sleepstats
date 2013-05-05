@@ -14,6 +14,10 @@ urlpatterns = patterns('',
     	'fitbyte.views.authorize_fitbit_complete',
     	name='authorize-fitbit-complete'),
 
+    url(r'^first-api-call$',
+        'fitbyte.views.first_api_call',
+        name='first-api-call'),
+
     url(r'^fitbit/', include('apps.fitbit.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
