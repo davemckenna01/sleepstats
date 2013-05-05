@@ -5,16 +5,20 @@ from apps.fitbit import views
 urlpatterns = patterns('',
     url(r'^$', views.index, name='index'),
 
-    url(r'^first-fitbit-api-call$',
-        views.first_fitbit_api_call,
-        name='first-fitbit-api-call'),
+    url(r'^weight$',
+        views.weight,
+        name='fitbit-weight'),
 
-    url(r'^authorize-fitbit$', views.authorize_fitbit,
+    url(r'^bmi$',
+        views.bmi,
+        name='fitbit-bmi'),
+
+    url(r'^authorize$', views.authorize,
     					name='authorize-fitbit'),
 
-    url(r'^authorize-fitbit-complete$',
-    	views.authorize_fitbit_complete,
-    	name='authorize-fitbit-complete'),
+    url(r'^authorize-complete$',
+    	views.authorize_complete,
+    	name='authorize-complete-fitbit'),
     
     # url(r'^(?P<poll_id>\d+)/$', views.detail, name='detail'),
     # url(r'^(?P<poll_id>\d+)/results/$', views.results, name='results'),
