@@ -7,6 +7,8 @@ import httplib2
 import urllib
 import os
 import time
+import pprint
+import json
 
 request_token_url = 'http://api.fitbit.com/oauth/request_token'
 access_token_url = 'http://api.fitbit.com/oauth/access_token'
@@ -75,7 +77,7 @@ def authorize_fitbit_complete(request):
 
 
     # Set the API endpoint 
-    url = "http://api.fitbit.com/1/user/davemckenna01/body/date/2013-05-03.json"
+    url = "http://api.fitbit.com/1/user/-/body/date/2013-05-03.json"
 
     # Set the base oauth_* parameters along with any other parameters required
     # for the API call.
@@ -105,10 +107,14 @@ def authorize_fitbit_complete(request):
     req.sign_request(signature_method, consumer_after_auth, token) 
 
     h = httplib2.Http()
-    resp, content = h.request(req.to_url(), 'GET', headers=req.to_header())
+    resp, content = h.request(url, 'GET', headers=req.to_header())
 
-    print resp
-    print content
+    content = json.loads(content)
+
+    pp = pprint.PrettyPrinter()
+
+    print pp.pprint(resp)
+    print pp.pprint(content)
 
     # # !!!!!!!!!!!!!!!!
     # # there's gotta be a better way to do the below crap... isn't this in the
