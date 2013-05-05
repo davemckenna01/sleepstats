@@ -7,17 +7,6 @@ from django.conf.urls import patterns, include, url
 urlpatterns = patterns('',
     url(r'^$', 'fitbyte.views.home', name='home'),
 
-    url(r'^authorize-fitbit$', 'fitbyte.views.authorize_fitbit',
-    					name='authorize-fitbit'),
-
-    url(r'^authorize-fitbit-complete$',
-    	'fitbyte.views.authorize_fitbit_complete',
-    	name='authorize-fitbit-complete'),
-
-    url(r'^first-api-call$',
-        'fitbyte.views.first_api_call',
-        name='first-api-call'),
-
     url(r'^fitbit/', include('apps.fitbit.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
