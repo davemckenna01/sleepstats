@@ -69,13 +69,16 @@ def authorize_complete(request, API_CONFIG, oauth_success_view):
     # throw away request token, we don't need it anymore
     del request.session[API_CONFIG['API_NAME'] + '_request_token']
 
-    request.session[API_CONFIG['API_NAME'] + '_authorized'] = True
-
     return HttpResponseRedirect(reverse(oauth_success_view))
 
 
 def make_api_call(resource, request, API_CONFIG):
-    access_token = request.session[API_CONFIG['API_NAME'] + '_access_token']
+    key = API_CONFIG['API_NAME'] + '_access_token'
+
+    if key not in request.session:
+        return redirect_to_auth_url(API_CONFIG)
+
+    access_token = request.session[key]
 
     # Set the base oauth_* parameters along with any other parameters required
     # for the API call.
@@ -107,9 +110,13 @@ def make_api_call(resource, request, API_CONFIG):
     h = httplib2.Http()
     resp, content = h.request(resource, 'GET', headers=req.to_header())
 
-    # if invalid access token, get user to authorize app
     if resp['status'] == '401':
-        authorize_url = reverse('authorize-' + API_CONFIG['API_NAME'])
-        return HttpResponseRedirect(authorize_url)
+        # if invalid access token, get user to authorize app
+        return redirect_to_auth_url(API_CONFIG)
     else:
+        # return the json response
         return HttpResponse(content, content_type="application/json") 
+
+def redirect_to_auth_url(API_CONFIG):
+    authorize_url = reverse('authorize-' + API_CONFIG['API_NAME'])
+    return HttpResponseRedirect(authorize_url)
