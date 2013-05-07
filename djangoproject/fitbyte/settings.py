@@ -161,3 +161,4 @@ LOGGING = {
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.file'
 SESSION_FILE_PATH = PROJECT_ROOT + '/sessions'
+SESSION_COOKIE_AGE = 86400 * 365 * 1 # arbitrary, 1 year
