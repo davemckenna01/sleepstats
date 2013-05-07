@@ -1,4 +1,4 @@
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
 import oauth2 as oauth
@@ -74,7 +74,9 @@ def authorize_complete(request, API_CONFIG, oauth_success_view):
     return HttpResponseRedirect(reverse(oauth_success_view))
 
 
-def make_api_call(resource, access_token, API_CONFIG):
+def make_api_call(resource, request, API_CONFIG):
+    access_token = request.session[API_CONFIG['API_NAME'] + '_access_token']
+
     # Set the base oauth_* parameters along with any other parameters required
     # for the API call.
     params = {
@@ -105,6 +107,9 @@ def make_api_call(resource, access_token, API_CONFIG):
     h = httplib2.Http()
     resp, content = h.request(resource, 'GET', headers=req.to_header())
 
-    content = json.loads(content)
-
-    return resp, content
+    # if invalid access token, get user to authorize app
+    if resp['status'] == '401':
+        authorize_url = reverse('authorize-' + API_CONFIG['API_NAME'])
+        return HttpResponseRedirect(authorize_url)
+    else:
+        return HttpResponse(content, content_type="application/json") 

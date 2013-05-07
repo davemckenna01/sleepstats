@@ -3,8 +3,6 @@ from django.shortcuts import render
 
 def home(request):
 
-    print request.session
-
     context = {'message': ''}
     return render(request, 'home.html', context)
 
