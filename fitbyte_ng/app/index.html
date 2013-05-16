@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="{% static "app/styles/main.css" %}">
     <!-- endbuild -->
   </head>
-  <body ng-app="staticApp">
+  <body ng-app="fitbyteApp">
     <!--[if lt IE 7]>
       <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
     <![endif]-->
@@ -27,7 +27,7 @@
 
     <!-- Add your site or application content here -->
     Hey guy.
-    {% if fitbit %}
+    {% if fitbitAuthorized %}
       <br>
       <br>
       <a href="{% url 'fitbit-weight' %}">Get your weight --></a>
@@ -47,6 +47,14 @@
 
     <!-- build:js scripts/scripts.js -->
     <script src="{% static "app/scripts/app.js" %}"></script>
+    <script>
+      // this seems like a hacky way to get Django vars into the JS app...
+      var weightUrl = '{% url "fitbit-weight" %}',
+          bmiUrl = '{% url "fitbit-bmi" %}',
+          fitbitAuthURL = '{% url "authorize-fitbit" %}';
+
+      var fitbitAuthorized = eval('{{ fitbitAuthorized }}'.toLowerCase());
+    </script>
     <script src="{% static "app/scripts/controllers/main.js" %}"></script>
     <!-- endbuild -->
 
