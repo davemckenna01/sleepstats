@@ -5,5 +5,5 @@ def home(request):
     context = {
         'fitbit': True if 'fitbit_access_token' in request.session else False
     }
-    return render(request, 'home.html', context)
+    return render(request, 'index.html', context)
 
