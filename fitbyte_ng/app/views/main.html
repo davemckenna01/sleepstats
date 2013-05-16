@@ -1,10 +1,11 @@
-<div class="hero-unit">
-    <h1>'Allo, 'Allo!</h1>
-    <p>You now have</p>
-    <ul>
-        <li ng-repeat="thing in awesomeThings">{{thing}}</li>
-    </ul>
-    <p>installed.</p>
-    <h3>Enjoy coding! - Yeoman</h3>
+<div ng-switch="fitbitAuthorized">
+    <div ng-switch-when="true">
+        Your Fitbit account is hooked up!<br><br>
+        <a href="{{fitbitURLs.weight}}">Get your weight</a><br><br>
+        <a href="{{fitbitURLs.bmi}}">Get your BMI</a><br><br>
+    </div>
+    <div ng-switch-when="false">
+        You need to hook up Fitbit first...<br><br>
+        <a href="{{fitbitURLs.auth}}">Do it!</a>
+    </div>
 </div>
-

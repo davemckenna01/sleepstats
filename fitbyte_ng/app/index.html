@@ -26,20 +26,6 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    Hey guy.
-    {% if fitbitAuthorized %}
-      <br>
-      <br>
-      <a href="{% url 'fitbit-weight' %}">Get your weight --></a>
-      <br>
-      <br>
-      <a href="{% url 'fitbit-bmi' %}">Get your bmi --></a>
-    {% else %}
-      <br>
-      <br>
-      <a href="{% url 'authorize-fitbit' %}">Hook up your fitbit account.</a>
-    {% endif %}
-
     <div class="container" ng-view></div>
 
     <script src="{% static "app/components/angular/angular.js" %}"></script>
@@ -49,11 +35,19 @@
     <script src="{% static "app/scripts/app.js" %}"></script>
     <script>
       // this seems like a hacky way to get Django vars into the JS app...
-      var weightUrl = '{% url "fitbit-weight" %}',
-          bmiUrl = '{% url "fitbit-bmi" %}',
-          fitbitAuthURL = '{% url "authorize-fitbit" %}';
-
-      var fitbitAuthorized = eval('{{ fitbitAuthorized }}'.toLowerCase());
+      angular.module('fitbyteApp').
+        value('apis', {
+          urls: {
+            fitbit: {
+              weight: '{% url "fitbit-weight" %}',
+              bmi: '{% url "fitbit-bmi" %}',
+              auth: '{% url "authorize-fitbit" %}'
+            }
+          },
+          authorized: {
+            fitbit: eval('{{ fitbitAuthorized }}'.toLowerCase())
+          }
+        });
     </script>
     <script src="{% static "app/scripts/controllers/main.js" %}"></script>
     <!-- endbuild -->
