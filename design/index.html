@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" href="style.css">
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="main.js"></script>
+</head>
+<body>
+    <h1>Fitbyte</h1>
+    <div id="connector">
+        <button id="connect">Connect to Fitbit</button>
+        <div class="connection-complete">Connected</div>
+    </div>
+    <div id="fitbyte">
+        <div id="select-date">
+            <label for="start-date">Start Date
+                <input id="start-date" name="start-date">
+            </label>
+            <label for="end-date">End Date
+                <input id="end-date" name="end-date">
+            </label>
+        </div>
+        <ul id="menu">
+            <li data-section="times-awoken" class="selected">Times Awoken</li>
+            <li data-section="some-other-section">Something else</li>
+        </ul>
+        <div id="sections">
+            <div id="times-awoken" class="section selected">
+                <h2>Times Awoken</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Mean</th>
+                            <th>Median</th>
+                            <th>Mode</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>14</td>
+                            <td>12</td>
+                            <td>13</td>
+                        </tr> 
+                    </tbody>
+                </table>
+            </div>
+            <div id="some-other-section" class="section">
+                some other section
+            </div>
+        </div>
+    </div>
+</body>
+</html>

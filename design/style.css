@@ -1,0 +1,47 @@
+h1 {
+    display: inline-block;
+}
+
+#connector {
+    display: inline-block;
+}
+
+#connector .connection-complete {
+    display: none;
+}
+
+#fitbyte {
+    display:none;
+}
+
+#fitbyte.connected {
+    display:block;
+}
+
+#menu li {
+    cursor: pointer;
+}
+
+#menu li.selected {
+    font-weight: bold;
+}
+
+.section {
+    display: none;
+    border:1px solid black;
+    padding:5px;
+    min-height:200px;
+    width:500px;
+}
+
+#times-awoken {
+    background-color: #eee;
+}
+
+#some-other-section {
+    background-color: yellow;
+}
+
+#sections div.selected {
+    display: block;
+}
