@@ -39,8 +39,8 @@
         value('apis', {
           urls: {
             fitbit: {
-              weight: '{% url "fitbit-weight" %}',
-              bmi: '{% url "fitbit-bmi" %}',
+              sleepByDate: '{% url "fitbit-sleep-by-date" "2013-05-09" %}',
+              sleepStats: '{% url "fitbit-sleep-stats" "2013-05-09" "2013-05-17" %}',
               auth: '{% url "authorize-fitbit" %}'
             }
           },

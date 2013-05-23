@@ -3,15 +3,13 @@ from django.conf.urls import patterns, url
 from apps.fitbit import views
 
 urlpatterns = patterns('',
-    url(r'^$', views.index, name='index'),
+    url(r'^sleepByDate/(\d{4}-\d{2}-\d{2})$',
+        views.sleep_by_date,
+        name='fitbit-sleep-by-date'),
 
-    url(r'^weight$',
-        views.weight,
-        name='fitbit-weight'),
-
-    url(r'^bmi$',
-        views.bmi,
-        name='fitbit-bmi'),
+    url(r'^sleepStats/(\d{4}-\d{2}-\d{2})/(\d{4}-\d{2}-\d{2})$',
+        views.sleep_stats,
+        name='fitbit-sleep-stats'),
 
     url(r'^authorize$', views.authorize,
     					name='authorize-fitbit'),

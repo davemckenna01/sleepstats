@@ -3,16 +3,15 @@ import oauth1_utils
 
 import pprint
 
-def index(request):
-    pass
+api_url = "http://api.fitbit.com/1/user/-/"
 
-def weight(request):
-    url = "http://api.fitbit.com/1/user/-/body/date/2013-05-02.json"
+def sleep_by_date(request, date):
+    url = api_url + "sleep/date/" + date + ".json"
 
     return oauth1_utils.make_api_call(url, request, API_CONFIG)
 
-def bmi(request):
-    url = "http://api.fitbit.com/1/user/-/body/date/2013-05-02.json"
+def sleep_stats(request, start, end):
+    url = api_url + "sleep/awakeningsCount/date/" + start + "/" + end + ".json"
 
     return oauth1_utils.make_api_call(url, request, API_CONFIG)
 
