@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <head>
     <link rel="stylesheet" href="style.css">
+
     <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="highcharts.js"></script>
+    <script src="underscore.js"></script>
     <script src="main.js"></script>
 </head>
 <body>
@@ -21,7 +24,7 @@
         </div>
         <ul id="menu">
             <li data-section="times-awoken" class="selected">Times Awoken</li>
-            <li data-section="some-other-section">Something else</li>
+            <li data-section="minutes-till-sleep">Minutes 'Till Sleep</li>
         </ul>
         <div id="sections">
             <div id="times-awoken" class="section selected">
@@ -42,9 +45,27 @@
                         </tr> 
                     </tbody>
                 </table>
+                <div class="data-display histogram"></div>
             </div>
-            <div id="some-other-section" class="section">
-                some other section
+            <div id="minutes-till-sleep" class="section">
+                <h2>Minutes 'Till Sleep</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Mean</th>
+                            <th>Median</th>
+                            <th>Mode</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>34</td>
+                            <td>20</td>
+                            <td>15</td>
+                        </tr> 
+                    </tbody>
+                </table>
+                <div class="data-display histogram"></div>
             </div>
         </div>
     </div>

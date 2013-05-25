@@ -20,10 +20,13 @@ h1 {
 
 #menu li {
     cursor: pointer;
+    padding:5px;
+    background-color:#eee;
 }
 
-#menu li.selected {
+#menu li.selected, #menu li:hover {
     font-weight: bold;
+    background-color: #ccc
 }
 
 .section {
@@ -31,7 +34,7 @@ h1 {
     border:1px solid black;
     padding:5px;
     min-height:200px;
-    width:500px;
+    /*width:500px;*/
 }
 
 #times-awoken {
