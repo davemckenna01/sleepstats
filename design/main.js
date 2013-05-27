@@ -11,13 +11,13 @@ var timesAwoken,
 timesAwoken = {"sleep-awakeningsCount":[{"dateTime":"2013-05-04","value":"11"}, {"dateTime":"2013-05-05","value":"29"}, {"dateTime":"2013-05-06","value":"22"}, {"dateTime":"2013-05-07","value":"15"}, {"dateTime":"2013-05-08","value":"13"},{"dateTime":"2013-05-09","value":"4"},{"dateTime":"2013-05-10","value":"15"},{"dateTime":"2013-05-11","value":"40"},{"dateTime":"2013-05-12","value":"14"},{"dateTime":"2013-05-13","value":"16"},{"dateTime":"2013-05-14","value":"13"},{"dateTime":"2013-05-15","value":"0"},{"dateTime":"2013-05-16","value":"9"},{"dateTime":"2013-05-17","value":"17"},{"dateTime":"2013-05-18","value":"16"},{"dateTime":"2013-05-19","value":"40"},{"dateTime":"2013-05-20","value":"0"},{"dateTime":"2013-05-21","value":"16"},{"dateTime":"2013-05-22","value":"12"},{"dateTime":"2013-05-23","value":"25"},{"dateTime":"2013-05-24","value":"16"}]};
 minutesTillSleep = {"sleep-minutesToFallAsleep":[{"dateTime":"2013-05-04","value":"22"},{"dateTime":"2013-05-05","value":"32"},{"dateTime":"2013-05-06","value":"16"},{"dateTime":"2013-05-07","value":"26"},{"dateTime":"2013-05-08","value":"7"},{"dateTime":"2013-05-09","value":"7"},{"dateTime":"2013-05-10","value":"7"},{"dateTime":"2013-05-11","value":"5"},{"dateTime":"2013-05-12","value":"34"},{"dateTime":"2013-05-13","value":"10"},{"dateTime":"2013-05-14","value":"28"},{"dateTime":"2013-05-15","value":"0"},{"dateTime":"2013-05-16","value":"8"},{"dateTime":"2013-05-17","value":"8"},{"dateTime":"2013-05-18","value":"13"},{"dateTime":"2013-05-19","value":"28"},{"dateTime":"2013-05-20","value":"0"},{"dateTime":"2013-05-21","value":"6"},{"dateTime":"2013-05-22","value":"18"},{"dateTime":"2013-05-23","value":"7"},{"dateTime":"2013-05-24","value":"30"}]};
 
-timesAwokenData = timeSeriesToDistribution(timesAwoken['sleep-awakeningsCount']);
+timesAwokenData = timeSeriesToDistribution(timesAwoken['sleep-awakeningsCount'], 5);
 timesAwokenCategories = timesAwokenData[0];
 timesAwokenCounts = timesAwokenData[1];
 
-minutesTillSleepData = timeSeriesToDistribution(timesAwoken['sleep-minutesToFallAsleep']);
-minutesTillSleepCategories = timesAwokenData[0];
-minutesTillSleepCounts = timesAwokenData[1];
+minutesTillSleepData = timeSeriesToDistribution(minutesTillSleep['sleep-minutesToFallAsleep'], 5);
+minutesTillSleepCategories = minutesTillSleepData[0];
+minutesTillSleepCounts = minutesTillSleepData[1];
 
 $(function(){
     initConnect();
@@ -66,10 +66,16 @@ function initDataVis() {
     $('#minutes-till-sleep .data-display').highcharts(minutesTillSleepData);
 }
 
-function timeSeriesToDistribution(timeSeriesArray) {
+function timeSeriesToDistribution(timeSeriesArray, categorySize) {
     var grouped,
         categories,
-        counts;
+        counts,
+        min,
+        max;
+
+    /*
+        if categorySize < 1 return Error
+    */
 
     grouped = _.groupBy(timeSeriesArray, function(item) {
         return item.value;
@@ -83,11 +89,44 @@ function timeSeriesToDistribution(timeSeriesArray) {
     categories = _.map(grouped, function(group) {
         // note there might be more than one element in the group array...
         // but we just choose the first b/c it will always be there
-        return group[0].value;
+        return parseInt(group[0].value);
     });
     counts = _.map(grouped, function(group) {
         return group.length;
     });
+
+    min = _.min(categories);
+    max = _.max(categories);
+
+    // create buckets
+    var buckets = {};
+    /*
+    something like {'3-7': 8}, {'8-12': 14}, {'13-17': 39}, etc...
+    */
+    var spread;
+
+    spread = max - min;
+
+    var numCategories = (spread / categorySize) < 1 ? 1 : Math.floor((max - min) / categorySize) + 1;
+    var i;
+    var j;
+    var lowEnd;
+    var highEnd;
+    var key;
+
+    for (i = 0; i < numCategories; i++) {
+        lowEnd = min + (categorySize * i);
+        highEnd = lowEnd + categorySize - 1;
+        key = lowEnd + '-' + highEnd;
+        buckets[key] = 0;
+        for (j = 0; j < categories.length; j++) {
+            if (categories[j] >= lowEnd && categories[j] <= highEnd) {
+                buckets[key] += counts[j];
+            }
+        }
+    }
+
+    console.log(buckets)
 
     return [categories, counts, grouped];
 }
