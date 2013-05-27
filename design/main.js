@@ -66,15 +66,20 @@ function initDataVis() {
 }
 
 function timeSeriesToDistribution(timeSeriesArray, categorySize) {
+    // sheer # of vars makes this smell fishy...
     var grouped,
         categories,
         counts,
         min,
-        max;
-
-    /*
-        if categorySize < 1 return Error
-    */
+        max,
+        buckets,
+        spread,
+        numCategories,
+        i,
+        j,
+        lowEnd,
+        highEnd,
+        key;
 
     grouped = _.groupBy(timeSeriesArray, function(item) {
         return item.value;
@@ -94,30 +99,30 @@ function timeSeriesToDistribution(timeSeriesArray, categorySize) {
         return group.length;
     });
 
+    /*  TODO:
+        if categorySize < 1 return Error
+        if categorySize === 1,
+            then do "2", "3", "4" instead of "2-2", "3-3", "4-4"
+    */
+
     min = _.min(categories);
     max = _.max(categories);
 
     // create buckets
-    var buckets = {};
-    /*
-    something like {'3-7': 8}, {'8-12': 14}, {'13-17': 39}, etc...
-    */
-    var spread;
+    // will be something like {'3-7': 8}, {'8-12': 14}, {'13-17': 39}, etc...
+    buckets = {};
 
     spread = max - min;
+    numCategories = (spread / categorySize) < 1 ? 1 : Math.floor((max - min) / categorySize) + 1;
 
-    var numCategories = (spread / categorySize) < 1 ? 1 : Math.floor((max - min) / categorySize) + 1;
-    var i;
-    var j;
-    var lowEnd;
-    var highEnd;
-    var key;
-
+    // init each bucket, eg. "0-4", "5-9"
     for (i = 0; i < numCategories; i++) {
         lowEnd = min + (categorySize * i);
         highEnd = lowEnd + categorySize - 1;
         key = lowEnd + '-' + highEnd;
         buckets[key] = 0;
+
+        // then add stuff to bucket, accumulating values
         for (j = 0; j < categories.length; j++) {
             if (categories[j] >= lowEnd && categories[j] <= highEnd) {
                 buckets[key] += counts[j];
@@ -125,9 +130,16 @@ function timeSeriesToDistribution(timeSeriesArray, categorySize) {
         }
     }
 
-    console.log(buckets)
+    // sort low to high
+    buckets = _.sortBy(_.pairs(buckets), function(pair) {
+        return parseInt(pair[0].match(/^(\d+)-/)[1]);
+    });
 
-    return [categories, counts, grouped];
+    categories = _.map(buckets, function(bucket) {return bucket[0];});
+
+    counts = _.map(buckets, function(bucket) {return bucket[1];});
+
+    return [categories, counts];
 }
 
 function generateChartData(title, categories, count, yTick) {
