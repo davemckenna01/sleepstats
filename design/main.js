@@ -1,54 +1,23 @@
 var timesAwoken,
-    timesAwokenGrouped,
+    timesAwokenData,
     timesAwokenCategories,
     timesAwokenCounts,
 
     minutesTillSleep,
-    minutesTillSleepGrouped,
+    minutesTillSleepData,
     minutesTillSleepCategories,
     minutesTillSleepCounts;
 
 timesAwoken = {"sleep-awakeningsCount":[{"dateTime":"2013-05-04","value":"11"}, {"dateTime":"2013-05-05","value":"29"}, {"dateTime":"2013-05-06","value":"22"}, {"dateTime":"2013-05-07","value":"15"}, {"dateTime":"2013-05-08","value":"13"},{"dateTime":"2013-05-09","value":"4"},{"dateTime":"2013-05-10","value":"15"},{"dateTime":"2013-05-11","value":"40"},{"dateTime":"2013-05-12","value":"14"},{"dateTime":"2013-05-13","value":"16"},{"dateTime":"2013-05-14","value":"13"},{"dateTime":"2013-05-15","value":"0"},{"dateTime":"2013-05-16","value":"9"},{"dateTime":"2013-05-17","value":"17"},{"dateTime":"2013-05-18","value":"16"},{"dateTime":"2013-05-19","value":"40"},{"dateTime":"2013-05-20","value":"0"},{"dateTime":"2013-05-21","value":"16"},{"dateTime":"2013-05-22","value":"12"},{"dateTime":"2013-05-23","value":"25"},{"dateTime":"2013-05-24","value":"16"}]};
-
-// group by # of times awoken
-timesAwokenGrouped = _.groupBy(timesAwoken['sleep-awakeningsCount'], function(day) {
-    return day.value;
-});
-
-// sort low to high
-timesAwokenGrouped = _.sortBy(timesAwokenGrouped, function(group){
-    return parseInt(group[0].value)
-});
-
-timesAwokenCategories = _.map(timesAwokenGrouped, function(group) {
-    // note there might be more than one element in the group array...
-    // but we just choose the first b/c it will always be there
-    return group[0].value;
-});
-timesAwokenCounts = _.map(timesAwokenGrouped, function(group) {
-    return group.length;
-});
-
 minutesTillSleep = {"sleep-minutesToFallAsleep":[{"dateTime":"2013-05-04","value":"22"},{"dateTime":"2013-05-05","value":"32"},{"dateTime":"2013-05-06","value":"16"},{"dateTime":"2013-05-07","value":"26"},{"dateTime":"2013-05-08","value":"7"},{"dateTime":"2013-05-09","value":"7"},{"dateTime":"2013-05-10","value":"7"},{"dateTime":"2013-05-11","value":"5"},{"dateTime":"2013-05-12","value":"34"},{"dateTime":"2013-05-13","value":"10"},{"dateTime":"2013-05-14","value":"28"},{"dateTime":"2013-05-15","value":"0"},{"dateTime":"2013-05-16","value":"8"},{"dateTime":"2013-05-17","value":"8"},{"dateTime":"2013-05-18","value":"13"},{"dateTime":"2013-05-19","value":"28"},{"dateTime":"2013-05-20","value":"0"},{"dateTime":"2013-05-21","value":"6"},{"dateTime":"2013-05-22","value":"18"},{"dateTime":"2013-05-23","value":"7"},{"dateTime":"2013-05-24","value":"30"}]};
 
-// group by # of times awoken
-minutesTillSleepGrouped = _.groupBy(minutesTillSleep['sleep-minutesToFallAsleep'], function(day) {
-    return day.value;
-});
+timesAwokenData = timeSeriesToDistribution(timesAwoken['sleep-awakeningsCount']);
+timesAwokenCategories = timesAwokenData[0];
+timesAwokenCounts = timesAwokenData[1];
 
-// sort low to high
-minutesTillSleepGrouped = _.sortBy(minutesTillSleepGrouped, function(group){
-    return parseInt(group[0].value)
-});
-
-minutesTillSleepCategories = _.map(minutesTillSleepGrouped, function(group) {
-    // note there might be more than one element in the group array...
-    // but we just choose the first b/c it will always be there
-    return group[0].value;
-});
-minutesTillSleepCounts = _.map(minutesTillSleepGrouped, function(group) {
-    return group.length;
-});
+minutesTillSleepData = timeSeriesToDistribution(timesAwoken['sleep-minutesToFallAsleep']);
+minutesTillSleepCategories = timesAwokenData[0];
+minutesTillSleepCounts = timesAwokenData[1];
 
 $(function(){
     initConnect();
@@ -95,6 +64,32 @@ function initDataVis() {
         1
     )
     $('#minutes-till-sleep .data-display').highcharts(minutesTillSleepData);
+}
+
+function timeSeriesToDistribution(timeSeriesArray) {
+    var grouped,
+        categories,
+        counts;
+
+    grouped = _.groupBy(timeSeriesArray, function(item) {
+        return item.value;
+    });
+
+    // sort low to high
+    grouped = _.sortBy(grouped, function(group){
+        return parseInt(group[0].value)
+    });
+
+    categories = _.map(grouped, function(group) {
+        // note there might be more than one element in the group array...
+        // but we just choose the first b/c it will always be there
+        return group[0].value;
+    });
+    counts = _.map(grouped, function(group) {
+        return group.length;
+    });
+
+    return [categories, counts, grouped];
 }
 
 function generateChartData(title, categories, count, yTick) {
