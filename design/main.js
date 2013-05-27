@@ -1,23 +1,8 @@
 var timesAwoken,
-    timesAwokenData,
-    timesAwokenCategories,
-    timesAwokenCounts,
-
-    minutesTillSleep,
-    minutesTillSleepData,
-    minutesTillSleepCategories,
-    minutesTillSleepCounts;
+    minutesTillSleep;
 
 timesAwoken = {"sleep-awakeningsCount":[{"dateTime":"2013-05-04","value":"11"}, {"dateTime":"2013-05-05","value":"29"}, {"dateTime":"2013-05-06","value":"22"}, {"dateTime":"2013-05-07","value":"15"}, {"dateTime":"2013-05-08","value":"13"},{"dateTime":"2013-05-09","value":"4"},{"dateTime":"2013-05-10","value":"15"},{"dateTime":"2013-05-11","value":"40"},{"dateTime":"2013-05-12","value":"14"},{"dateTime":"2013-05-13","value":"16"},{"dateTime":"2013-05-14","value":"13"},{"dateTime":"2013-05-15","value":"0"},{"dateTime":"2013-05-16","value":"9"},{"dateTime":"2013-05-17","value":"17"},{"dateTime":"2013-05-18","value":"16"},{"dateTime":"2013-05-19","value":"40"},{"dateTime":"2013-05-20","value":"0"},{"dateTime":"2013-05-21","value":"16"},{"dateTime":"2013-05-22","value":"12"},{"dateTime":"2013-05-23","value":"25"},{"dateTime":"2013-05-24","value":"16"}]};
 minutesTillSleep = {"sleep-minutesToFallAsleep":[{"dateTime":"2013-05-04","value":"22"},{"dateTime":"2013-05-05","value":"32"},{"dateTime":"2013-05-06","value":"16"},{"dateTime":"2013-05-07","value":"26"},{"dateTime":"2013-05-08","value":"7"},{"dateTime":"2013-05-09","value":"7"},{"dateTime":"2013-05-10","value":"7"},{"dateTime":"2013-05-11","value":"5"},{"dateTime":"2013-05-12","value":"34"},{"dateTime":"2013-05-13","value":"10"},{"dateTime":"2013-05-14","value":"28"},{"dateTime":"2013-05-15","value":"0"},{"dateTime":"2013-05-16","value":"8"},{"dateTime":"2013-05-17","value":"8"},{"dateTime":"2013-05-18","value":"13"},{"dateTime":"2013-05-19","value":"28"},{"dateTime":"2013-05-20","value":"0"},{"dateTime":"2013-05-21","value":"6"},{"dateTime":"2013-05-22","value":"18"},{"dateTime":"2013-05-23","value":"7"},{"dateTime":"2013-05-24","value":"30"}]};
-
-timesAwokenData = timeSeriesToDistribution(timesAwoken['sleep-awakeningsCount'], 5);
-timesAwokenCategories = timesAwokenData[0];
-timesAwokenCounts = timesAwokenData[1];
-
-minutesTillSleepData = timeSeriesToDistribution(minutesTillSleep['sleep-minutesToFallAsleep'], 5);
-minutesTillSleepCategories = minutesTillSleepData[0];
-minutesTillSleepCounts = minutesTillSleepData[1];
 
 $(function(){
     initConnect();
@@ -45,25 +30,39 @@ function initMenu() {
 }
 
 function initDataVis() {
-    var timesAwokenData,
-        minutesTillSleepData,
-        timeInBedData;
+    var timesAwokenChartData,
+        timesAwokenDistributionData,
+        timesAwokenCategories,
+        timesAwokenCounts,
 
-    timesAwokenData = generateChartData(
+        minutesTillSleepChartData,
+        minutesTillSleepDistributionData,
+        minutesTillSleepCategories,
+        minutesTillSleepCounts;
+
+    timesAwokenDistributionData = timeSeriesToDistribution(timesAwoken['sleep-awakeningsCount'], 5);
+    timesAwokenCategories = timesAwokenDistributionData[0];
+    timesAwokenCounts = timesAwokenDistributionData[1];
+
+    timesAwokenChartData = generateChartData(
         'Times Awoken',
         timesAwokenCategories,
         timesAwokenCounts,
         1
     )
-    $('#times-awoken .data-display').highcharts(timesAwokenData);
+    $('#times-awoken .data-display').highcharts(timesAwokenChartData);
 
-    minutesTillSleepData = generateChartData(
+    minutesTillSleepDistributionData = timeSeriesToDistribution(minutesTillSleep['sleep-minutesToFallAsleep'], 5);
+    minutesTillSleepCategories = minutesTillSleepDistributionData[0];
+    minutesTillSleepCounts = minutesTillSleepDistributionData[1];
+
+    minutesTillSleepChartData = generateChartData(
         'Minutes Till Sleep',
         minutesTillSleepCategories,
         minutesTillSleepCounts,
         1
     )
-    $('#minutes-till-sleep .data-display').highcharts(minutesTillSleepData);
+    $('#minutes-till-sleep .data-display').highcharts(minutesTillSleepChartData);
 }
 
 function timeSeriesToDistribution(timeSeriesArray, categorySize) {
