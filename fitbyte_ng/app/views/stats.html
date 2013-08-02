@@ -4,10 +4,12 @@
 </ul>
 
 <div ng-switch="graphType">
-    <div ng-switch-when="timesAwoken">
-    	times awoken
+    <div id="times-awoken" ng-switch-when="timesAwoken">
+    	<h2>times awoken</h2>
+    	<div highchart></div>
     </div>
-    <div ng-switch-when="timeToSleep">
-    	time to sleep
+    <div id="time-to-sleep" ng-switch-when="timeToSleep">
+    	<h2>time to sleep</h2>
+    	<div highchart></div>
     </div>
 </div>

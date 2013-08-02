@@ -28,6 +28,10 @@
     <!-- Add your site or application content here -->
     <div class="container" ng-view></div>
 
+    <script src="{% static "app/components/jquery/jquery.js" %}"></script>
+    <script src="{% static "app/components/underscore/underscore.js" %}"></script>
+    <script src="{% static "app/components/highcharts/highcharts.js" %}"></script>
+
     <script src="{% static "app/components/angular/angular.js" %}"></script>
     <script src="{% static "app/components/angular-resource/angular-resource.js" %}"></script>
 
@@ -51,6 +55,7 @@
     </script>
     <script src="{% static "app/scripts/controllers/main.js" %}"></script>
     <script src="{% static "app/scripts/controllers/stats.js" %}"></script>
+    <script src="{% static "app/scripts/directives/highchart.js" %}"></script>
     <!-- endbuild -->
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
