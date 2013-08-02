@@ -1,0 +1,13 @@
+<ul>
+	<li ng-class="{selected: graphType=='timesAwoken'}" ng-click="showGraph('timesAwoken')">Times Awoken</li>
+	<li ng-class="{selected: graphType=='timeToSleep'}" ng-click="showGraph('timeToSleep')">Time To Sleep</li>
+</ul>
+
+<div ng-switch="graphType">
+    <div ng-switch-when="timesAwoken">
+    	times awoken
+    </div>
+    <div ng-switch-when="timeToSleep">
+    	time to sleep
+    </div>
+</div>

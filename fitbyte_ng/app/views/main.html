@@ -1,8 +1,13 @@
 <div ng-switch="fitbitAuthorized">
     <div ng-switch-when="true">
         Your Fitbit account is hooked up!<br><br>
+        Django endpoints<br><br>
         <a href="{{fitbitURLs.sleepByDate}}">Get sleep by date</a><br><br>
         <a href="{{fitbitURLs.sleepStats}}">Get sleep stats</a><br><br>
+
+        <br><br>
+        <a href="#/stats">See cool graphs and stats</a>
+
     </div>
     <div ng-switch-when="false">
         You need to hook up Fitbit first...<br><br>

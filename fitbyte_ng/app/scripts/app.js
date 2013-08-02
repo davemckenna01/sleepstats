@@ -7,6 +7,10 @@ angular.module('fitbyteApp', [])
         templateUrl: 'static/app/views/main.html',
         controller: 'MainCtrl'
       })
+      .when('/stats', {
+        templateUrl: 'static/app/views/stats.html',
+        controller: 'StatsCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
