@@ -26,13 +26,13 @@ def sleep_time_to_sleep(request, start, end):
 
 def sleep_time_in_bed(request, start, end):
     time.sleep(1)
-    url = api_url + "sleep/timeInBed/date/" + start + "/" + end
+    url = api_url + "sleep/timeInBed/date/" + start + "/" + end + ".json"
 
     return oauth1_utils.make_api_call(url, request, API_CONFIG)
 
 def sleep_start_time(request, start, end):
     time.sleep(1)
-    url = api_url + "sleep/startTime/date/" + start + "/" + end
+    url = api_url + "sleep/startTime/date/" + start + "/" + end + ".json"
 
     return oauth1_utils.make_api_call(url, request, API_CONFIG)
 
