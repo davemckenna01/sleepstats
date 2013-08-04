@@ -1,5 +1,6 @@
 from apps.fitbit.config import API_CONFIG
 import oauth1_utils
+import time
 
 import pprint
 
@@ -10,7 +11,8 @@ def sleep_by_date(request, date):
 
     return oauth1_utils.make_api_call(url, request, API_CONFIG)
 
-def sleep_stats(request, start, end):
+def sleep_awakenings(request, start, end):
+    time.sleep(1)
     url = api_url + "sleep/awakeningsCount/date/" + start + "/" + end + ".json"
 
     return oauth1_utils.make_api_call(url, request, API_CONFIG)

@@ -1,15 +1,20 @@
-<ul>
-	<li ng-class="{selected: graphType=='timesAwoken'}" ng-click="showGraph('timesAwoken')">Times Awoken</li>
-	<li ng-class="{selected: graphType=='timeToSleep'}" ng-click="showGraph('timeToSleep')">Time To Sleep</li>
-</ul>
+<div ng-hide="dataLoaded">Loading...</div>
 
-<div ng-switch="graphType">
-    <div ng-switch-when="timesAwoken">
-    	<h2>times awoken</h2>
-    	<div highchart="timesAwoken"></div>
-    </div>
-    <div ng-switch-when="timeToSleep">
-    	<h2>time to sleep</h2>
-    	<div highchart="timeToSleep"></div>
-    </div>
+<div ng-show="dataLoaded">
+	<ul>
+		<li ng-class="{selected: graphType=='timesAwoken'}" ng-click="showGraph('timesAwoken')">Times Awoken</li>
+		<li ng-class="{selected: graphType=='timeToSleep'}" ng-click="showGraph('timeToSleep')">Time To Sleep</li>
+	</ul>
+
+	<div ng-switch="graphType">
+	    <div ng-switch-when="timesAwoken">
+	    	<h2>times awoken</h2>
+	    	<div highchart="timesAwoken"></div>
+	    </div>
+	    <div ng-switch-when="timeToSleep">
+	    	<h2>time to sleep</h2>
+	    	<div highchart="timeToSleep"></div>
+	    </div>
+	</div>
 </div>
+

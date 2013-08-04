@@ -7,9 +7,9 @@ urlpatterns = patterns('',
         views.sleep_by_date,
         name='fitbit-sleep-by-date'),
 
-    url(r'^sleepStats/(\d{4}-\d{2}-\d{2})/(\d{4}-\d{2}-\d{2})$',
-        views.sleep_stats,
-        name='fitbit-sleep-stats'),
+    url(r'^sleepAwakenings/(\d{4}-\d{2}-\d{2})/(\d{4}-\d{2}-\d{2})$',
+        views.sleep_awakenings,
+        name='fitbit-sleep-awakenings'),
 
     url(r'^authorize$', views.authorize,
     					name='authorize-fitbit'),
