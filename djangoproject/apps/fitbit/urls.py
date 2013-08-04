@@ -11,6 +11,18 @@ urlpatterns = patterns('',
         views.sleep_awakenings,
         name='fitbit-sleep-awakenings'),
 
+    url(r'^sleepTimeToSleep/(\d{4}-\d{2}-\d{2})/(\d{4}-\d{2}-\d{2})$',
+        views.sleep_time_to_sleep,
+        name='fitbit-sleep-timetosleep'),
+
+    url(r'^sleepTimeInBed/(\d{4}-\d{2}-\d{2})/(\d{4}-\d{2}-\d{2})$',
+        views.sleep_time_in_bed,
+        name='fitbit-sleep-timeinbed'),
+
+    url(r'^sleepStartTime/(\d{4}-\d{2}-\d{2})/(\d{4}-\d{2}-\d{2})$',
+        views.sleep_start_time,
+        name='fitbit-sleep-starttime'),
+
     url(r'^authorize$', views.authorize,
     					name='authorize-fitbit'),
 

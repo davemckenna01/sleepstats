@@ -44,7 +44,10 @@
           urls: {
             fitbit: {
               sleepByDate: '{% url "fitbit-sleep-by-date" "2013-05-09" %}',
-              sleepAwakenings: '{% url "fitbit-sleep-awakenings" "2013-05-04" "2013-05-24" %}',
+              sleepAwakenings: '{% url "fitbit-sleep-awakenings" "2013-05-04" "2013-08-04" %}',
+              sleepTimeToSleep: '{% url "fitbit-sleep-timetosleep" "2013-05-04" "2013-08-04" %}',
+              sleepTimeInBed: '{% url "fitbit-sleep-timeinbed" "2013-05-04" "2013-08-04" %}',
+              sleepStartTime: '{% url "fitbit-sleep-starttime" "2013-05-04" "2013-08-04" %}',
               auth: '{% url "authorize-fitbit" %}'
             }
           },
