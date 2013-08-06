@@ -2,10 +2,10 @@
 
 <div ng-switch="dataLoaded">
 	<div ng-switch-when="true">
-    	<ul>
-    		<li ng-class="{selected: graphType=='awakenings'}" ng-click="showGraph('awakenings')">Times Awoken</li>
-    		<li ng-class="{selected: graphType=='timeToSleep'}" ng-click="showGraph('timeToSleep')">Time To Sleep</li>
-    		<li ng-class="{selected: graphType=='timeInBed'}" ng-click="showGraph('timeInBed')">Time In Bed</li>
+    	<ul id="stat-menu">
+    		<li ng-class="{selected:graphType=='awakenings'}" ng-click="showGraph('awakenings')">Times Awoken</li>
+    		<li ng-class="{selected:graphType=='timeToSleep'}" ng-click="showGraph('timeToSleep')">Time To Sleep</li>
+    		<li ng-class="{selected:graphType=='timeInBed'}" ng-click="showGraph('timeInBed')">Time In Bed</li>
     	</ul>
 
     	<div ng-switch="graphType">
