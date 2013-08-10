@@ -1,4 +1,3 @@
 *.pyc
-sessions/
 .DS_Store
 venv
