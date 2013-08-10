@@ -1,3 +1,11 @@
-Django
-httplib2
-oauth2
+Django==1.5.1
+distribute==0.6.34
+dj-database-url==0.2.2
+dj-static==0.0.5
+django-toolbelt==0.0.1
+gunicorn==17.5
+httplib2==0.8
+oauth2==1.5.211
+psycopg2==2.5.1
+static==0.4
+wsgiref==0.1.2
