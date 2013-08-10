@@ -1,3 +1,9 @@
+import socket
+if socket.gethostname() == 'Daves-MacBook-Pro-2.local':
+    OAUTH_CALLBACK_BASE_URL = 'http://0.0.0.0:5000'
+else:
+    OAUTH_CALLBACK_BASE_URL = 'http://sleepstats.herokuapp.com'
+
 # Django settings for sleepstats project.
 import os
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))

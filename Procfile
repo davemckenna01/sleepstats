@@ -1,1 +1,1 @@
-web: gunicorn djangoproject/sleepstats.wsgi
+web: sh run.sh
