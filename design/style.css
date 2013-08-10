@@ -10,11 +10,11 @@ h1 {
     display: none;
 }
 
-#fitbyte {
+#sleepstats {
     display:none;
 }
 
-#fitbyte.connected {
+#sleepstats.connected {
     display:block;
 }
 

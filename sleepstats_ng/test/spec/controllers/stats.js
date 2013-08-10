@@ -3,7 +3,7 @@
 describe('Controller: StatsCtrl', function () {
 
   // load the controller's module
-  beforeEach(module('fitbyteApp'));
+  beforeEach(module('sleepstatsApp'));
 
   var StatsCtrl,
     scope;

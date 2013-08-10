@@ -1,4 +1,4 @@
-# Django settings for fitbyte project.
+# Django settings for sleepstats project.
 import os
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
@@ -71,7 +71,7 @@ STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    os.path.join(PROJECT_ROOT, "../../fitbyte_ng"), 
+    os.path.join(PROJECT_ROOT, "../../sleepstats_ng"), 
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -105,17 +105,17 @@ MIDDLEWARE_CLASSES = (
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'fitbyte.urls'
+ROOT_URLCONF = 'sleepstats.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = 'fitbyte.wsgi.application'
+WSGI_APPLICATION = 'sleepstats.wsgi.application'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     os.path.join(PROJECT_ROOT, 'templates/'),
-    os.path.join(PROJECT_ROOT, '../../fitbyte_ng/app/') # angular index.html
+    os.path.join(PROJECT_ROOT, '../../sleepstats_ng/app/') # angular index.html
 )
 
 INSTALLED_APPS = (

@@ -5,7 +5,7 @@ from django.conf.urls import patterns, include, url
 # admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^$', 'fitbyte.views.home', name='home'),
+    url(r'^$', 'sleepstats.views.home', name='home'),
 
     url(r'^fitbit/', include('apps.fitbit.urls')),
 

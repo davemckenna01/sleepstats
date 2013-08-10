@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('fitbyteApp')
+angular.module('sleepstatsApp')
   .directive('highchart', function () {
     return {
       template: '<div></div>',

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('fitbyteApp', [])
+angular.module('sleepstatsApp', [])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {

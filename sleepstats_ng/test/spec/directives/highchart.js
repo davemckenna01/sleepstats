@@ -1,7 +1,7 @@
 'use strict';
 
 describe('Directive: highchart', function () {
-  beforeEach(module('fitbyteApp'));
+  beforeEach(module('sleepstatsApp'));
 
   var element;
 

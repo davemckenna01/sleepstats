@@ -14,7 +14,7 @@ function initConnect() {
     $('#connector #connect').click(function(){
         $(this).hide();
         $('#connector .connection-complete').show();
-        $('#fitbyte').addClass('connected');
+        $('#sleepstats').addClass('connected');
     });
 }
 
