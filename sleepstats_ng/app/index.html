@@ -37,25 +37,6 @@
 
     <!-- build:js scripts/scripts.js -->
     <script src="{% static "app/scripts/app.js" %}"></script>
-    <script>
-      // this seems like a hacky way to get Django vars into the JS app...
-      angular.module('sleepstatsApp').
-        value('apis', {
-          urls: {
-            fitbit: {
-              sleepByDate: '{% url "fitbit_sleep_by_date" "2013-05-09" %}',
-              sleepAwakenings: '{% url "fitbit_sleep_awakenings" "2013-05-04" "2013-08-04" %}',
-              sleepTimeToSleep: '{% url "fitbit_sleep_timetosleep" "2013-05-04" "2013-08-04" %}',
-              sleepTimeInBed: '{% url "fitbit_sleep_timeinbed" "2013-05-04" "2013-08-04" %}',
-              sleepStartTime: '{% url "fitbit_sleep_starttime" "2013-05-04" "2013-08-04" %}',
-              auth: '{% url "authorize_fitbit" %}'
-            }
-          },
-          authorized: {
-            fitbit: eval('{{ fitbitAuthorized }}'.toLowerCase())
-          }
-        });
-    </script>
     <script src="{% static "app/scripts/controllers/main.js" %}"></script>
     <script src="{% static "app/scripts/controllers/stats.js" %}"></script>
     <script src="{% static "app/scripts/directives/highchart.js" %}"></script>
