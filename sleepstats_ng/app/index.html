@@ -12,7 +12,7 @@
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css styles/main.css -->
-    <link rel="stylesheet" href="{% static "app/styles/main.css" %}">
+    <link rel="stylesheet" href="{% static "styles/main.css" %}">
     <!-- endbuild -->
   </head>
   <body ng-app="sleepstatsApp">
@@ -28,18 +28,18 @@
     <!-- Add your site or application content here -->
     <div class="container" ng-view></div>
 
-    <script src="{% static "app/components/jquery/jquery.js" %}"></script>
-    <script src="{% static "app/components/underscore/underscore.js" %}"></script>
-    <script src="{% static "app/components/highcharts/highcharts.js" %}"></script>
+    <script src="{% static "components/jquery/jquery.js" %}"></script>
+    <script src="{% static "components/underscore/underscore.js" %}"></script>
+    <script src="{% static "components/highcharts/highcharts.js" %}"></script>
 
-    <script src="{% static "app/components/angular/angular.js" %}"></script>
-    <script src="{% static "app/components/angular-resource/angular-resource.js" %}"></script>
+    <script src="{% static "components/angular/angular.js" %}"></script>
+    <script src="{% static "components/angular-resource/angular-resource.js" %}"></script>
 
     <!-- build:js scripts/scripts.js -->
-    <script src="{% static "app/scripts/app.js" %}"></script>
-    <script src="{% static "app/scripts/controllers/main.js" %}"></script>
-    <script src="{% static "app/scripts/controllers/stats.js" %}"></script>
-    <script src="{% static "app/scripts/directives/highchart.js" %}"></script>
+    <script src="{% static "scripts/app.js" %}"></script>
+    <script src="{% static "scripts/controllers/main.js" %}"></script>
+    <script src="{% static "scripts/controllers/stats.js" %}"></script>
+    <script src="{% static "scripts/directives/highchart.js" %}"></script>
     <!-- endbuild -->
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
