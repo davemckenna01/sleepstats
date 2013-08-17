@@ -5,8 +5,6 @@ from django.conf.urls import patterns, include, url
 # admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^$', 'sleepstats.views.home', name='home'),
-
     url(r'^fitbit/', include('apps.fitbit.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:

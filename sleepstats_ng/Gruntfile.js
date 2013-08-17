@@ -187,7 +187,7 @@ module.exports = function (grunt) {
     htmlmin: {
       dist: {
         options: {
-          /*removeCommentsFromCDATA: true,
+          removeCommentsFromCDATA: true,
           // https://github.com/yeoman/grunt-usemin/issues/44
           //collapseWhitespace: true,
           collapseBooleanAttributes: true,
@@ -195,7 +195,7 @@ module.exports = function (grunt) {
           removeRedundantAttributes: true,
           useShortDoctype: true,
           removeEmptyAttributes: true,
-          removeOptionalTags: true*/
+          removeOptionalTags: true
         },
         files: [{
           expand: true,
@@ -264,7 +264,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('server', [
     'clean:server',
-    'coffee:dist',
+    // 'coffee:dist',
     // 'compass:server',
     'livereload-start',
     'connect:livereload',
@@ -274,7 +274,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('test', [
     'clean:server',
-    'coffee',
+    // 'coffee',
     // 'compass',
     'connect:test',
     'karma'
@@ -283,13 +283,13 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [
     'clean:dist',
     'jshint',
-    'test',
-    'coffee',
+    // 'test',
+    // 'coffee',
     // 'compass:dist',
     'useminPrepare',
     'imagemin',
     'cssmin',
-    // 'htmlmin',
+    'htmlmin',
     'concat',
     'copy',
     'cdnify',
