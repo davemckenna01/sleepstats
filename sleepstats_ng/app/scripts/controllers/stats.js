@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('sleepstatsApp')
+angular.module('sleepstatsNgApp')
   .controller('StatsCtrl', function ($scope, $http, $q, apis) {
     $q.all([
       $http.get(apis.urls.fitbit.sleepAwakenings),

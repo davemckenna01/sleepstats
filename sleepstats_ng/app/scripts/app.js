@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('sleepstatsApp', [])
+angular.module('sleepstatsNgApp', [])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {

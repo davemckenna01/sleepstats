@@ -194,7 +194,7 @@ function showChart(chart, element, rawData, title, bucketSize) {
 
 
 
-angular.module('sleepstatsApp')
+angular.module('sleepstatsNgApp')
   .directive('highchart', function () {
     return {
       template: '<div></div>',
