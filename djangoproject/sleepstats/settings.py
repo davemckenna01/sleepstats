@@ -1,5 +1,11 @@
 import socket
+
 if socket.gethostname() == 'Daves-MacBook-Pro-2.local':
+    ENV = 'development'
+else:
+    ENV = 'production'
+
+if ENV == 'development':
     OAUTH_CALLBACK_BASE_URL = 'http://0.0.0.0:5000'
 else:
     OAUTH_CALLBACK_BASE_URL = 'http://sleepstats.herokuapp.com'
@@ -75,9 +81,14 @@ STATIC_ROOT = os.path.join(PROJECT_ROOT, "staticfiles")
 # Example: "http://example.com/static/", "http://static.example.com/"
 STATIC_URL = '/ng/'
 
+if ENV == 'development':
+    STATIC_DIR = 'app'
+else:
+    STATIC_DIR = 'dist'
+
 # Additional locations of static files
 STATICFILES_DIRS = (
-    os.path.join(PROJECT_ROOT, "../../sleepstats_ng/app"), 
+    os.path.join(PROJECT_ROOT, "../../sleepstats_ng/" + STATIC_DIR), 
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
