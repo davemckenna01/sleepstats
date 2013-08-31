@@ -76,7 +76,7 @@ def make_api_call(resource, request, API_CONFIG):
     key = API_CONFIG['API_NAME'] + '_access_token'
 
     if key not in request.session:
-        return redirect_to_auth_url(API_CONFIG)
+        return respond_unauthorized()
 
     access_token = request.session[key]
 
@@ -112,7 +112,7 @@ def make_api_call(resource, request, API_CONFIG):
 
     if resp['status'] == '401':
         # if invalid access token, get user to authorize app
-        return redirect_to_auth_url(API_CONFIG)
+        return respond_unauthorized()
     else:
         # return the json response
         return HttpResponse(content, content_type="application/json") 
@@ -120,3 +120,6 @@ def make_api_call(resource, request, API_CONFIG):
 def redirect_to_auth_url(API_CONFIG):
     authorize_url = reverse('authorize_' + API_CONFIG['API_NAME'])
     return HttpResponseRedirect(authorize_url)
+
+def respond_unauthorized():
+    return HttpResponse(status=401)
