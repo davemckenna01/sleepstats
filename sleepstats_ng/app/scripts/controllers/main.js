@@ -2,9 +2,7 @@
 
 angular.module('sleepstatsApp')
   .controller('MainCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+  // .controller('MainCtrl', function ($scope, apis) {
+  //   $scope.fitbitAuthorized = apis.authorized.fitbit;
+    $scope.fitbitAuthorized = true;
   });
