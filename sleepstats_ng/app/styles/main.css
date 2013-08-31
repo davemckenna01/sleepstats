@@ -1,9 +1,0 @@
-/* Will be compiled down to a single stylesheet with your sass files */
-
-#stat-menu li.selected {
-    font-weight: bold;
-}
-
-#stat-menu li {
-    cursor:pointer;
-}
