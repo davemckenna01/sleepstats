@@ -118,5 +118,5 @@ def make_api_call(resource, request, API_CONFIG):
         return HttpResponse(content, content_type="application/json") 
 
 def redirect_to_auth_url(API_CONFIG):
-    authorize_url = reverse('authorize-' + API_CONFIG['API_NAME'])
+    authorize_url = reverse('authorize_' + API_CONFIG['API_NAME'])
     return HttpResponseRedirect(authorize_url)
