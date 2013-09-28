@@ -140,7 +140,7 @@ TEMPLATE_DIRS = (
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.sessions',
+    # 'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
@@ -180,6 +180,6 @@ LOGGING = {
     }
 }
 
-SESSION_ENGINE = 'django.contrib.sessions.backends.file'
-SESSION_FILE_PATH = PROJECT_ROOT + '/sessions'
+SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
+# SESSION_FILE_PATH = PROJECT_ROOT + '/sessions'
 SESSION_COOKIE_AGE = 86400 * 365 * 1 # arbitrary, 1 year
