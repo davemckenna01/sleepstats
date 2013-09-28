@@ -1,9 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+from django.conf import settings
 
 def home(request):
-    context = {
-        'fitbitAuthorized': True if 'fitbit_access_token' in request.session else False
-    }
-    return render(request, 'index.html', context)
+    return HttpResponseRedirect(settings.HOME_PAGE)
 

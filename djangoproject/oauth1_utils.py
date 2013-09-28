@@ -44,7 +44,7 @@ def authorize(request, API_CONFIG):
     )
 
 
-def authorize_complete(request, API_CONFIG, oauth_success_url):
+def authorize_complete(request, API_CONFIG, oauth_success_view):
     # Step 3: Once the consumer has redirected the user back to the oauth_callback
     # URL you can request the access token the user has approved. You use the 
     # request token to sign this request. After this is done you throw away the
@@ -69,7 +69,7 @@ def authorize_complete(request, API_CONFIG, oauth_success_url):
     # throw away request token, we don't need it anymore
     del request.session[API_CONFIG['API_NAME'] + '_request_token']
 
-    return HttpResponseRedirect(oauth_success_url)
+    return HttpResponseRedirect(reverse(oauth_success_view))
 
 
 def make_api_call(resource, request, API_CONFIG):
