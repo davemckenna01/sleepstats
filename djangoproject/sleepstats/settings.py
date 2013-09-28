@@ -6,7 +6,7 @@ else:
     ENV = 'production'
 
 if ENV == 'development':
-    OAUTH_CALLBACK_BASE_URL = 'http://0.0.0.0:5000'
+    OAUTH_CALLBACK_BASE_URL = 'http://localhost:8000'
 else:
     OAUTH_CALLBACK_BASE_URL = 'http://sleepstats.herokuapp.com'
 

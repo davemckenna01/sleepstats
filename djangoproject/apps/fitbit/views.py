@@ -40,4 +40,4 @@ def authorize(request):
     return oauth1_utils.authorize(request, API_CONFIG)
 
 def authorize_complete(request):
-    return oauth1_utils.authorize_complete(request, API_CONFIG, 'home')
+    return oauth1_utils.authorize_complete(request, API_CONFIG, 'http://localhost:8000/ng/index.html')
