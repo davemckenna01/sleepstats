@@ -1,0 +1,27 @@
+<div ng-hide="dataLoaded">Loading...</div>
+
+<div ng-switch="dataLoaded">
+    <div ng-switch-when="true">
+        <ul id="stat-menu">
+            <li ng-class="{selected:graphType=='awakenings'}" ng-click="showGraph('awakenings')">Times Awoken</li>
+            <li ng-class="{selected:graphType=='timeToSleep'}" ng-click="showGraph('timeToSleep')">Time To Sleep</li>
+            <li ng-class="{selected:graphType=='timeInBed'}" ng-click="showGraph('timeInBed')">Time In Bed</li>
+        </ul>
+
+        <div ng-switch="graphType">
+            <div ng-switch-when="awakenings">
+                <div highchart="awakenings" title="Awakenings" bucketsize="5"></div>
+            </div>
+            <div ng-switch-when="timeToSleep">
+                <div highchart="timeToSleep" title="Time To Sleep" bucketsize="5"></div>
+            </div>
+            <div ng-switch-when="timeInBed">
+                <div highchart="timeInBed" title="Time In Bed" bucketsize="30"></div>
+            </div>
+    <!--        <div ng-switch-when="startTime">
+                <div highchart="startTime" title="Start Time"></div>
+            </div>
+     -->    
+        </div>
+    </div>
+</div>

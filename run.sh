@@ -1,8 +1,5 @@
 #! /bin/bash
 
-cd sleepstats_ng
-npm install
-grunt
-cd ../djangoproject
+cd djangoproject
 gunicorn sleepstats.wsgi
 
