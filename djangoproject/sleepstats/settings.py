@@ -6,9 +6,11 @@ else:
     ENV = 'production'
 
 if ENV == 'development':
-    OAUTH_CALLBACK_BASE_URL = 'http://localhost:8000'
+    BASE_URL = 'http://localhost:5000'
 else:
-    OAUTH_CALLBACK_BASE_URL = 'http://sleepstats.herokuapp.com'
+    BASE_URL = 'http://sleepstats.herokuapp.com'
+
+HOME_PAGE = BASE_URL + '/ng/index.html'
 
 # Django settings for sleepstats project.
 import os

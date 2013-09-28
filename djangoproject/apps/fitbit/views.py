@@ -1,4 +1,5 @@
 from apps.fitbit.config import API_CONFIG
+from django.conf import settings
 import oauth1_utils
 import time
 
@@ -40,4 +41,4 @@ def authorize(request):
     return oauth1_utils.authorize(request, API_CONFIG)
 
 def authorize_complete(request):
-    return oauth1_utils.authorize_complete(request, API_CONFIG, 'http://localhost:8000/ng/index.html')
+    return oauth1_utils.authorize_complete(request, API_CONFIG, settings.HOME_PAGE)
