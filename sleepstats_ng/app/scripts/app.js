@@ -4,10 +4,6 @@ angular.module('sleepstatsApp', [])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
-      })
-      .when('/stats', {
         templateUrl: 'views/stats.html',
         controller: 'StatsCtrl'
       })
