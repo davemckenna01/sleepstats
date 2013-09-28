@@ -1,8 +1,8 @@
 #! /bin/bash
 
-cd djangoproject
-gunicorn sleepstats.wsgi
-cd ../sleepstats_ng
+cd sleepstats_ng
 npm install
 grunt
+cd ../djangoproject
+gunicorn sleepstats.wsgi
 
