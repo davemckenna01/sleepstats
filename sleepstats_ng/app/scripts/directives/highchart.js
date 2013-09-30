@@ -32,7 +32,8 @@ function generateChartData(title, categories, count, yTick) {
         borderColor:'#666',
         pointPadding:0,
         groupPadding:0,
-        color: 'rgba(204,204,204,.85)'
+        color: 'rgba(204,204,204,.85)',
+        animation: false
       },
       spline:{
         shadow:false,
