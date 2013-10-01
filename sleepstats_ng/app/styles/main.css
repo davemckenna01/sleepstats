@@ -34,3 +34,7 @@ body {
     border:none;
     border-bottom:1px solid black;
 }
+
+#message {
+    margin:10px 0;
+}

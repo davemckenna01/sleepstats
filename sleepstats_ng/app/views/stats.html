@@ -4,7 +4,10 @@
     <button ng-click="getData()">Go</button>
 </form>
 
-<div ng-show="dataLoading">Loading...</div>
+<p id="message">
+    <div ng-hide="dateSelect.$valid">Please enter a date range</div>
+    <div ng-show="dataLoading">Loading...</div>
+</p>
 
 <div ng-switch="dataLoaded">
     <div ng-switch-when="true">
