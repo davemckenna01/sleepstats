@@ -35,6 +35,16 @@ body {
     border-bottom:1px solid black;
 }
 
+.date-box {
+    display:inline-block;
+}
+
+.date-parsed {
+    text-align: right;
+    font-size:20px;
+    font-style: italic;
+}
+
 #message {
     margin:10px 0;
 }

@@ -1,6 +1,15 @@
 <form id="date-select" name="dateSelect">
-    <label>From</label> <input type="text" ng-model="from" required ng-pattern="dateFormat">
-    <label>To</label> <input type="text" ng-model="to" required ng-pattern="dateFormat">
+    <div class="date-box">
+        <label>From</label>
+        <input type="text" ng-model="from" required>
+        <div class="date-parsed">{{from | parseDate}}</div>
+    </div>
+    <div class="date-box">
+        <label>To</label>
+        <input type="text" ng-model="to" required>
+        <div class="date-parsed">{{to | parseDate}}</div>
+    </div>
+
     <button ng-click="getData()">Go</button>
 </form>
 

@@ -1,14 +1,23 @@
 'use strict';
 
 angular.module('sleepstatsApp')
-  .controller('StatsCtrl', function ($scope, $http, $q, apis, $window) {
+  .controller('StatsCtrl', function ($scope, $http, $filter, $q, apis, $window){
     $scope.switchGraph = function(type) {
       $scope.graphType = type;
     };
 
     $scope.getData = function(type) {
-      if (!$scope.dateSelect.$valid) {
-        console.log('fix that shit');
+      var from,
+          to,
+          dateFormat;
+
+      dateFormat = /^\d\d\d\d-\d\d-\d\d$/;
+      from = $filter('parseDate')($scope.from);
+      to = $filter('parseDate')($scope.to);
+
+      if ($scope.dateSelect.$error.required ||
+          !dateFormat.test(from) ||
+          !dateFormat.test(to)) {
         return false;
       }
 
@@ -16,11 +25,11 @@ angular.module('sleepstatsApp')
 
       $q.all([
         $http.get(apis.urls.fitbit.sleepAwakenings +
-                  '/' + $scope.from + '/' + $scope.to),
+                  '/' + from + '/' + to),
         $http.get(apis.urls.fitbit.sleepTimeToSleep +
-                  '/' + $scope.from + '/' + $scope.to),
+                  '/' + from + '/' + to),
         $http.get(apis.urls.fitbit.sleepTimeInBed +
-                  '/' + $scope.from + '/' + $scope.to)
+                  '/' + from + '/' + to)
       ])
       .then(
       function(data) {
@@ -45,7 +54,6 @@ angular.module('sleepstatsApp')
       $scope.dataLoaded = true;
     }
 
-    $scope.dateFormat = /^\d\d\d\d-\d\d-\d\d$/;
     $scope.dataLoaded = false;
     $scope.graphType = 'awakenings';
   });
