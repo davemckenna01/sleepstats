@@ -1,15 +1,20 @@
 /* Will be compiled down to a single stylesheet with your sass files */
 
+body {
+    font-family:Helvetica, Arial, Sans-serif;
+}
+
 #stat-menu {
-    margin: 0 0 10px 0;
+    margin: 30px 0;
     padding: 0;
 }
 
 #stat-menu li {
+    font-size: 20px;
     cursor: pointer;
     list-style-type: none;
     display: inline-block;
-    padding: 5px 20px;
+    padding: 10px 30px;
     border: 1px solid black;
     border-radius: 6px;
     margin-right: 10px;
@@ -18,4 +23,14 @@
 #stat-menu li.selected, #stat-menu li:hover {
     color:white;
     background-color: #777;
+}
+
+#date-select {
+    font-size:30px;
+}
+
+#date-select input {
+    font-size:inherit;
+    border:none;
+    border-bottom:1px solid black;
 }
