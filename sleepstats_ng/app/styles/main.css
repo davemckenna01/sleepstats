@@ -1,9 +1,21 @@
 /* Will be compiled down to a single stylesheet with your sass files */
 
-#stat-menu li.selected {
-    font-weight: bold;
+#stat-menu {
+    margin: 0 0 10px 0;
+    padding: 0;
 }
 
 #stat-menu li {
-    cursor:pointer;
+    cursor: pointer;
+    list-style-type: none;
+    display: inline-block;
+    padding: 5px 20px;
+    border: 1px solid black;
+    border-radius: 6px;
+    margin-right: 10px;
+}
+
+#stat-menu li.selected, #stat-menu li:hover {
+    color:white;
+    background-color: #777;
 }
