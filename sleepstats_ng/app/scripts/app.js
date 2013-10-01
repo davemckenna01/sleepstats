@@ -14,9 +14,9 @@ angular.module('sleepstatsApp', [])
   .value('apis', {
     urls: {
       fitbit: {
-        sleepAwakenings: '/fitbit/sleepAwakenings/2013-05-04/2013-08-04',
-        sleepTimeToSleep: '/fitbit/sleepTimeToSleep/2013-05-04/2013-08-04',
-        sleepTimeInBed: '/fitbit/sleepTimeInBed/2013-05-04/2013-08-04',
+        sleepAwakenings: '/fitbit/sleepAwakenings',
+        sleepTimeToSleep: '/fitbit/sleepTimeToSleep',
+        sleepTimeInBed: '/fitbit/sleepTimeInBed',
         auth: '/fitbit/authorize'
         // sleepStartTime: 
         // sleepByDate:

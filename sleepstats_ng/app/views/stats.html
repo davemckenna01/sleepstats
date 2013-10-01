@@ -1,11 +1,17 @@
-<div ng-hide="dataLoaded">Loading...</div>
+<form id="date-select" name="dateSelect">
+    <label>From</label> <input type="text" ng-model="from" required ng-pattern="dateFormat">
+    <label>To</label> <input type="text" ng-model="to" required ng-pattern="dateFormat">
+    <button ng-click="getData()">Go</button>
+</form>
+
+<div ng-show="dataLoading">Loading...</div>
 
 <div ng-switch="dataLoaded">
     <div ng-switch-when="true">
         <ul id="stat-menu">
-            <li ng-class="{selected:graphType=='awakenings'}" ng-click="showGraph('awakenings')">Times Awoken</li>
-            <li ng-class="{selected:graphType=='timeToSleep'}" ng-click="showGraph('timeToSleep')">Time To Sleep</li>
-            <li ng-class="{selected:graphType=='timeInBed'}" ng-click="showGraph('timeInBed')">Time In Bed</li>
+            <li ng-class="{selected:graphType=='awakenings'}" ng-click="switchGraph('awakenings')">Times Awoken</li>
+            <li ng-class="{selected:graphType=='timeToSleep'}" ng-click="switchGraph('timeToSleep')">Time To Sleep</li>
+            <li ng-class="{selected:graphType=='timeInBed'}" ng-click="switchGraph('timeInBed')">Time In Bed</li>
         </ul>
 
         <div ng-switch="graphType">
