@@ -205,6 +205,15 @@ angular.module('sleepstatsApp')
 
         rawData = scope[attrs.highchart];
         if (rawData) {
+
+          // remove stats with zero as a value, like sleeping for 0 hours...
+          // that really means you didn't track that day
+          if (attrs.nozeros === 'true') {
+            rawData = _.reject(rawData, function(obj) {
+              return obj.value === '0';
+            });
+          }
+
           showChart(attrs.highchart, element, rawData, attrs.title, parseInt(attrs.bucketsize, 10));
         }
       }

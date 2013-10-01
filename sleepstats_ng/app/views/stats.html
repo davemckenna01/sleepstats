@@ -10,13 +10,13 @@
 
         <div ng-switch="graphType">
             <div ng-switch-when="awakenings">
-                <div highchart="awakenings" title="Awakenings" bucketSize="5"></div>
+                <div highchart="awakenings" title="Awakenings" bucketSize="5" noZeros="true"></div>
             </div>
             <div ng-switch-when="timeToSleep">
-                <div highchart="timeToSleep" title="Time To Sleep" bucketSize="5"></div>
+                <div highchart="timeToSleep" title="Time To Sleep" bucketSize="5" noZeros="true"></div>
             </div>
             <div ng-switch-when="timeInBed">
-                <div highchart="timeInBed" title="Time In Bed" bucketSize="30"></div>
+                <div highchart="timeInBed" title="Time In Bed" bucketSize="30" noZeros="true"></div>
             </div>
     <!--        <div ng-switch-when="startTime">
                 <div highchart="startTime" title="Start Time"></div>
