@@ -1,6 +1,6 @@
 'use strict';
 
-function generateChartData(title, categories, count, yTick) {
+function generateChartData(title, categories, count, yTick, units) {
   return {
     chart: {
       renderTo:'container',
@@ -21,7 +21,7 @@ function generateChartData(title, categories, count, yTick) {
     tooltip:{
       borderWidth:1,
       formatter:function() {
-        return '<b>Minutes:</b><br/> '+ this.x +'<br/>'+
+        return '<b>' + units + ':</b><br/> '+ this.x +'<br/>'+
         '<b>Count:</b> '+ this.y;
       }
     },
@@ -173,7 +173,7 @@ function timeSeriesToDistribution(timeSeriesArray, categorySize) {
   return [categories, counts];
 }
 
-function showChart(chart, element, rawData, title, bucketSize) {
+function showChart(chart, element, rawData, title, bucketSize, units) {
   var chartData,
     distributionData,
     categories,
@@ -187,7 +187,8 @@ function showChart(chart, element, rawData, title, bucketSize) {
     title,
     categories,
     counts,
-    1
+    1,
+    units
   );
 
   $(element).highcharts(chartData);
@@ -214,7 +215,14 @@ angular.module('sleepstatsApp')
             });
           }
 
-          showChart(attrs.highchart, element, rawData, attrs.title, parseInt(attrs.bucketsize, 10));
+          showChart(
+            attrs.highchart,
+            element,
+            rawData,
+            attrs.title,
+            parseInt(attrs.bucketsize, 10),
+            attrs.units
+          );
         }
       }
     };
