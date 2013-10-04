@@ -22,6 +22,7 @@ angular.module('sleepstatsApp')
       }
 
       $scope.dataLoading = true;
+      $scope.dataLoaded = false;
 
       $q.all([
         $http.get(apis.urls.fitbit.sleepAwakenings +
