@@ -54,7 +54,7 @@ angular.module('sleepstatsApp')
       $scope.dataLoading = false;
       $scope.dataLoaded = true;
     }
-
+    
     $scope.dataLoaded = false;
     $scope.graphType = 'awakenings';
   });

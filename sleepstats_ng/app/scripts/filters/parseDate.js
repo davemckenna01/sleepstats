@@ -2,7 +2,7 @@
 
 angular.module('sleepstatsApp')
   .filter('parseDate', function () {
-    return function (input) {
+    return function (input, defaultText) {
       var dateFormat,
           date;
 
@@ -12,7 +12,7 @@ angular.module('sleepstatsApp')
       if (date) {
           return date.toString(dateFormat);
       } else {
-        return 'e.g. "last may"'
+        return 'e.g. "' + defaultText + '"'
       }
     };
   });

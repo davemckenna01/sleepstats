@@ -1,22 +1,22 @@
 <form id="date-select" name="dateSelect">
     <div class="date-box">
         <label>From</label>
-        <input type="text" ng-model="from" required>
-        <div class="date-parsed">{{from | parseDate}}</div>
+        <input type="text" ng-model="from" required autofocus>
+        <div class="date-parsed">{{from | parseDate:'last may'}}</div>
     </div>
     <div class="date-box">
         <label>To</label>
         <input type="text" ng-model="to" required>
-        <div class="date-parsed">{{to | parseDate}}</div>
+        <div class="date-parsed">{{to | parseDate:'today'}}</div>
     </div>
 
-    <button ng-click="getData()">Go</button>
+    <button id="go" ng-click="getData()">Go</button>
 </form>
 
-<p id="message">
+<div id="message">
     <div ng-hide="dateSelect.$valid">Please enter a date range</div>
     <div ng-show="dataLoading">Loading...</div>
-</p>
+</div>
 
 <div ng-switch="dataLoaded">
     <div ng-switch-when="true">

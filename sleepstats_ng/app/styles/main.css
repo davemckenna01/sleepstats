@@ -33,6 +33,8 @@ body {
     font-size:inherit;
     border:none;
     border-bottom:1px solid black;
+    outline:none;
+    color: #4cbfbf;
 }
 
 .date-box {
@@ -46,5 +48,13 @@ body {
 }
 
 #message {
-    margin:10px 0;
+    height:22px;
+    line-height: 29px;
+}
+
+button#go {
+   vertical-align: top;
+    margin-top: 15px;
+    padding: 5px 10px;
+    font-size: 30px; 
 }
