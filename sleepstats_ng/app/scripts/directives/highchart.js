@@ -29,10 +29,10 @@ function generateChartData(title, categories, count, yTick) {
       column:{
         shadow:false,
         borderWidth:0.5,
-        borderColor:'#666',
+        borderColor: 'rgba(76,191,191,1)',
         pointPadding:0,
         groupPadding:0,
-        color: 'rgba(204,204,204,.85)',
+        color: 'rgba(76,191,191,.65)',
         animation: false
       },
       spline:{
@@ -42,8 +42,8 @@ function generateChartData(title, categories, count, yTick) {
         }
       },
       areaspline:{
-        color:'rgb(69, 114, 167)',
-        fillColor:'rgba(69, 114, 167,.25)',
+        color: 'rgba(76,191,191,1)',
+        fillColor: 'rgba(76,191,191,.65)',
         shadow:false,
         marker:{
           radius:1
