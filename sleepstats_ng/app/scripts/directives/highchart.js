@@ -1,6 +1,6 @@
 'use strict';
 
-function generateChartData(title, categories, count, yTick, units) {
+function generateChartData(title, categories, count, yTick, toolTipFormatter) {
   return {
     chart: {
       renderTo:'container',
@@ -20,10 +20,7 @@ function generateChartData(title, categories, count, yTick, units) {
     },
     tooltip:{
       borderWidth:1,
-      formatter:function() {
-        return '<b>' + units + ':</b><br/> '+ this.x +'<br/>'+
-        '<b>Count:</b> '+ this.y;
-      }
+      formatter: toolTipFormatter
     },
     plotOptions:{
       column:{
@@ -144,7 +141,8 @@ function timeSeriesToDistribution(timeSeriesArray, categorySize) {
   buckets = {};
 
   spread = max - min;
-  numCategories = (spread / categorySize) < 1 ? 1 : Math.floor((max - min) / categorySize) + 1;
+  numCategories = (spread / categorySize) < 1 ? 
+                  1 : Math.floor((max - min) / categorySize) + 1;
 
   // init each bucket, eg. "0-4", "5-9"
   for (i = 0; i < numCategories; i++) {
@@ -173,7 +171,7 @@ function timeSeriesToDistribution(timeSeriesArray, categorySize) {
   return [categories, counts];
 }
 
-function showChart(chart, element, rawData, title, bucketSize, units) {
+function showChart(chart, element, rawData, title, bucketSize, formatter) {
   var chartData,
     distributionData,
     categories,
@@ -183,18 +181,42 @@ function showChart(chart, element, rawData, title, bucketSize, units) {
   categories = distributionData[0];
   counts = distributionData[1];
 
+  // change from "357-386" (mins) to "6-6.4" (hrs)
+  if (formatter.units === 'Hours') {
+    categories = _.map(categories, function(c) {
+      var range,
+          n1,
+          n2,
+          category;
+
+      range = /(\d*)-(\d*)/.exec(c);
+      n1 = minutesToHours(range[1]);
+      n2 = minutesToHours(range[2]);
+      category = n1 + ' - ' + n2;
+
+      return category;
+    });
+  }
+
   chartData = generateChartData(
     title,
     categories,
     counts,
     1,
-    units
+    formatter
   );
 
   $(element).highcharts(chartData);
 }
 
+function minutesToHours(mins) {
+  var hrs;
 
+  hrs = (parseInt(mins, 10) / 60);
+  hrs = Math.round(hrs * 10) / 10;
+
+  return hrs;
+}
 
 angular.module('sleepstatsApp')
   .directive('highchart', function () {
@@ -202,7 +224,18 @@ angular.module('sleepstatsApp')
       template: '<div></div>',
       restrict: 'A',
       link: function postLink(scope, element, attrs) {
-        var rawData;
+        var rawData,
+            toolTipFormatter;
+
+        toolTipFormatter = function(units) {
+          return '<b>' + units + ':</b><br/> ' + this.x + '<br/>' +
+                 '<b>Count:</b> ' + this.y;
+        }
+
+        // curry with units, b/c we have to give highcharts a function for the
+        // tooltip, and we want it to be dynamic
+        toolTipFormatter = _.partial(toolTipFormatter, attrs.units)
+        toolTipFormatter.units = attrs.units;
 
         rawData = scope[attrs.highchart];
         if (rawData) {
@@ -221,7 +254,7 @@ angular.module('sleepstatsApp')
             rawData,
             attrs.title,
             parseInt(attrs.bucketsize, 10),
-            attrs.units
+            toolTipFormatter
           );
         }
       }
