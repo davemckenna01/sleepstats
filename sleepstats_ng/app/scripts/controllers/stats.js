@@ -6,7 +6,7 @@ angular.module('sleepstatsApp')
       $scope.graphType = type;
     };
 
-    $scope.getData = function(type) {
+    $scope.getData = function() {
       var from,
           to,
           dateFormat;
@@ -53,7 +53,7 @@ angular.module('sleepstatsApp')
     $scope.updateUI = function() {
       $scope.dataLoading = false;
       $scope.dataLoaded = true;
-    }
+    };
     
     $scope.dataLoaded = false;
     $scope.graphType = 'awakenings';

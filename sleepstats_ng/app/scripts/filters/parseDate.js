@@ -10,9 +10,9 @@ angular.module('sleepstatsApp')
       date = Date.parse(input);
 
       if (date) {
-          return date.toString(dateFormat);
+        return date.toString(dateFormat);
       } else {
-        return 'e.g. "' + defaultText + '"'
+        return 'e.g. "' + defaultText + '"';
       }
     };
   });

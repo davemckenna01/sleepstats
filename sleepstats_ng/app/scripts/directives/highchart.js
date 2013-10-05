@@ -141,7 +141,7 @@ function timeSeriesToDistribution(timeSeriesArray, categorySize) {
   buckets = {};
 
   spread = max - min;
-  numCategories = (spread / categorySize) < 1 ? 
+  numCategories = (spread / categorySize) < 1 ?
                   1 : Math.floor((max - min) / categorySize) + 1;
 
   // init each bucket, eg. "0-4", "5-9"
@@ -169,6 +169,15 @@ function timeSeriesToDistribution(timeSeriesArray, categorySize) {
   counts = _.map(buckets, function(bucket) {return bucket[1];});
 
   return [categories, counts];
+}
+
+function minutesToHours(mins) {
+  var hrs;
+
+  hrs = (parseInt(mins, 10) / 60);
+  hrs = Math.round(hrs * 10) / 10;
+
+  return hrs;
 }
 
 function showChart(chart, element, rawData, title, bucketSize, formatter) {
@@ -209,15 +218,6 @@ function showChart(chart, element, rawData, title, bucketSize, formatter) {
   $(element).highcharts(chartData);
 }
 
-function minutesToHours(mins) {
-  var hrs;
-
-  hrs = (parseInt(mins, 10) / 60);
-  hrs = Math.round(hrs * 10) / 10;
-
-  return hrs;
-}
-
 angular.module('sleepstatsApp')
   .directive('highchart', function () {
     return {
@@ -230,11 +230,11 @@ angular.module('sleepstatsApp')
         toolTipFormatter = function(units) {
           return '<b>' + units + ':</b><br/> ' + this.x + '<br/>' +
                  '<b>Count:</b> ' + this.y;
-        }
+        };
 
         // curry with units, b/c we have to give highcharts a function for the
         // tooltip, and we want it to be dynamic
-        toolTipFormatter = _.partial(toolTipFormatter, attrs.units)
+        toolTipFormatter = _.partial(toolTipFormatter, attrs.units);
         toolTipFormatter.units = attrs.units;
 
         rawData = scope[attrs.highchart];
