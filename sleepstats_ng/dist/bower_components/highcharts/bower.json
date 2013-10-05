@@ -1,0 +1,14 @@
+{
+  "name": "highcharts",
+  "version": "3.0.5",
+  "main": "./highcharts.js",
+  "dependencies": {},
+  "gitHead": "e54532bc06b4c08b60df64cdf6e86f5f7ab3ad35",
+  "_id": "highcharts@3.0.5",
+  "readme": "ERROR: No README.md file found!",
+  "description": "ERROR: No README.md file found!",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ewen/bower-highcharts.git"
+  }
+}

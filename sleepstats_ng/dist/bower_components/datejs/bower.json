@@ -1,0 +1,9 @@
+{
+  "name": "datejs",
+  "version": "0.0.0",
+  "commit": "7bdddb55d69719e42c358c3a2b7df706ff3090f8",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/datejs/Datejs.git"
+  }
+}

@@ -1,22 +1,40 @@
-<div ng-hide="dataLoaded">Loading...</div>
+<form id="date-select" name="dateSelect">
+    <div class="date-box">
+        <label>From</label>
+        <input type="text" ng-model="from" required="" autofocus="">
+        <div class="date-parsed">{{from | parseDate:'last may'}}</div>
+    </div>
+    <div class="date-box">
+        <label>To</label>
+        <input type="text" ng-model="to" required="">
+        <div class="date-parsed">{{to | parseDate:'today'}}</div>
+    </div>
+
+    <button id="go" ng-click="getData()">Go</button>
+</form>
+
+<div id="message">
+    <div ng-hide="dateSelect.$valid">Please enter a date range</div>
+    <div ng-show="dataLoading">Loading...</div>
+</div>
 
 <div ng-switch="dataLoaded">
     <div ng-switch-when="true">
         <ul id="stat-menu">
-            <li ng-class="{selected:graphType=='awakenings'}" ng-click="showGraph('awakenings')">Times Awoken</li>
-            <li ng-class="{selected:graphType=='timeToSleep'}" ng-click="showGraph('timeToSleep')">Time To Sleep</li>
-            <li ng-class="{selected:graphType=='timeInBed'}" ng-click="showGraph('timeInBed')">Time In Bed</li>
+            <li ng-class="{selected:graphType=='awakenings'}" ng-click="switchGraph('awakenings')">Times Awoken</li>
+            <li ng-class="{selected:graphType=='timeToSleep'}" ng-click="switchGraph('timeToSleep')">Time To Sleep</li>
+            <li ng-class="{selected:graphType=='timeInBed'}" ng-click="switchGraph('timeInBed')">Time In Bed</li>
         </ul>
 
         <div ng-switch="graphType">
             <div ng-switch-when="awakenings">
-                <div highchart="awakenings" title="Awakenings" bucketsize="5"></div>
+                <div highchart="awakenings" title="Awakenings" bucketsize="5" nozeros="true" units="Times"></div>
             </div>
             <div ng-switch-when="timeToSleep">
-                <div highchart="timeToSleep" title="Time To Sleep" bucketsize="5"></div>
+                <div highchart="timeToSleep" title="Time To Sleep" bucketsize="5" nozeros="true" units="Minutes"></div>
             </div>
             <div ng-switch-when="timeInBed">
-                <div highchart="timeInBed" title="Time In Bed" bucketsize="30"></div>
+                <div highchart="timeInBed" title="Time In Bed" bucketsize="30" nozeros="true" units="Hours"></div>
             </div>
     <!--        <div ng-switch-when="startTime">
                 <div highchart="startTime" title="Start Time"></div>
