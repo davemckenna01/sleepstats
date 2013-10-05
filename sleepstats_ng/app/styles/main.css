@@ -58,3 +58,10 @@ button#go {
     padding: 5px 10px;
     font-size: 30px; 
 }
+
+#feature-requests {
+    position: fixed;
+    bottom: 0px;
+    padding:15px 0;
+    color:#444;
+}
