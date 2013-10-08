@@ -40,7 +40,8 @@ angular.module('sleepstatsApp')
 
         $scope.updateUI();
 
-        ga('send', 'event', 'API-' + window.location.host, 'Response 200');
+        $window.ga('send', 'event',
+                   'API-' + window.location.host, 'Response 200');
       },
       function(reason) {
         if (reason.status && reason.status === 401) {
