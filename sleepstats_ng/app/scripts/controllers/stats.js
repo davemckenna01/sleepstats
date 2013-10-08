@@ -39,6 +39,8 @@ angular.module('sleepstatsApp')
         $scope.timeInBed = data[2].data['sleep-timeInBed'];
 
         $scope.updateUI();
+
+        ga('send', 'event', 'API-' + window.location.host, 'Response 200');
       },
       function(reason) {
         if (reason.status && reason.status === 401) {
