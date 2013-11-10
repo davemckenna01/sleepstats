@@ -12,7 +12,7 @@ angular.module('sleepstatsApp')
       if (date) {
         return date.toString(dateFormat);
       } else {
-        return 'e.g. "' + defaultText + '"';
+        return defaultText;
       }
     };
   });
