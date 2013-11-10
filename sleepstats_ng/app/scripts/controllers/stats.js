@@ -2,11 +2,8 @@
 
 angular.module('sleepstatsApp')
   .controller('StatsCtrl', function ($scope, $http, $filter, $q, apis, $window){
-    $scope.switchGraph = function(type) {
-      $scope.graphType = type;
-    };
 
-    $scope.getData = function() {
+    $scope.handleInput = function() {
       var from,
           to,
           dateFormat;
@@ -19,10 +16,13 @@ angular.module('sleepstatsApp')
           !dateFormat.test(from) ||
           !dateFormat.test(to)) {
         return false;
+      } else {
+        $scope.getData(from, to);
       }
+    };
 
-      $scope.dataLoading = true;
-      $scope.dataLoaded = false;
+    $scope.getData = function(from, to) {
+      $scope.setUIToLoading();
 
       $q.all([
         $http.get(apis.urls.fitbit.sleepAwakenings +
@@ -38,7 +38,7 @@ angular.module('sleepstatsApp')
         $scope.timeToSleep = data[1].data['sleep-minutesToFallAsleep'];
         $scope.timeInBed = data[2].data['sleep-timeInBed'];
 
-        $scope.updateUI();
+        $scope.setUIToLoaded();
 
         $window.ga('send', 'event',
                    'API-' + window.location.host, 'Response 200');
@@ -48,14 +48,23 @@ angular.module('sleepstatsApp')
           $window.location.href = apis.urls.fitbit.auth;
         }
 
-        $scope.updateUI();
+        $scope.setUIToLoaded();
       }
       );
     };
 
-    $scope.updateUI = function() {
+    $scope.switchGraph = function(type) {
+      $scope.graphType = type;
+    };
+
+    $scope.setUIToLoaded = function() {
       $scope.dataLoading = false;
       $scope.dataLoaded = true;
+    };
+
+    $scope.setUIToLoading = function() {
+      $scope.dataLoading = true;
+      $scope.dataLoaded = false;
     };
     
     $scope.dataLoaded = false;
