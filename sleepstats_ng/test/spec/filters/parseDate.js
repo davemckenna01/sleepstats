@@ -11,9 +11,20 @@ describe('Filter: parseDate', function () {
     parseDate = $filter('parseDate');
   }));
 
-  it('should return the input prefixed with "parseDate filter:"', function () {
-    // var text = 'angularjs';
-    // expect(parseDate(text)).toBe('parseDate filter: ' + text);
+  it('should return a formatted date string from plain language', function () {
+    var text;
+
+    text = 'may 2013';
+    expect(parseDate(text)).toBe('2013-05-01');
+  });
+
+  it('should return default text if input is nonsensical', function () {
+    var text, defaultText;
+
+    text = 'gibbbberish';
+    defaultText = 'beautiful defaultness';
+
+    expect(parseDate(text, defaultText)).toBe(defaultText);
   });
 
 });

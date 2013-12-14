@@ -50,7 +50,67 @@ describe('Controller: StatsCtrl', function () {
   });
 
   describe('StatsCtrl.handleInput()', function () {
-    it('should ??', function () {
+    // beforeEach(inject(function ($controller, $rootScope) {
+    //   scope = $rootScope.$new();
+    //   StatsCtrl = $controller('StatsCtrl', {
+    //     $scope: scope
+    //   });
+    // }));
+    beforeEach(function () {
+      // stub input form error handling
+      scope.dateSelect = {
+        $error: {
+          required: false
+        }
+      }
+    });
+
+    it('should require correct date format', function () {
+      var inputResult,
+        invalidDate,
+        validDate;
+
+      invalidDate = 'foo';
+      validDate = '2013-05-05';
+
+      // stub ajax call
+      scope.getData = function(){};
+
+      scope.from = invalidDate;
+      scope.to = invalidDate;
+      inputResult = scope.handleInput();
+      expect(inputResult).toBe(false);
+
+      scope.from = validDate;
+      scope.to = invalidDate;
+      inputResult = scope.handleInput();
+      expect(inputResult).toBe(false);
+
+      scope.from = invalidDate;
+      scope.to = validDate;
+      inputResult = scope.handleInput();
+      expect(inputResult).toBe(false);
+
+      scope.from = validDate;
+      scope.to = validDate;
+      inputResult = scope.handleInput();
+      expect(inputResult).toBe(true);
+    });
+
+    it('should call getData() with a date range', function () {
+      var from, to;
+
+      from = '2013-05-05';
+      to = '2013-12-12';
+
+      spyOn(scope, 'getData');
+
+      scope.from = from;
+      scope.to = to;
+
+      scope.handleInput();
+
+      expect(scope.getData).toHaveBeenCalledWith(from, to);
     });
   });
 

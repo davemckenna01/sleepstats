@@ -9,6 +9,7 @@ angular.module('sleepstatsApp')
           dateFormat;
 
       dateFormat = /^\d\d\d\d-\d\d-\d\d$/;
+
       from = $filter('parseDate')($scope.from);
       to = $filter('parseDate')($scope.to);
 
@@ -18,6 +19,7 @@ angular.module('sleepstatsApp')
         return false;
       } else {
         $scope.getData(from, to);
+        return true;
       }
     };
 
