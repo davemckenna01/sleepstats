@@ -9,11 +9,14 @@ describe('Controller: StatsCtrl', function () {
     scope;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, $rootScope) {
+  beforeEach(inject(function ($controller, $rootScope, $window) {
     scope = $rootScope.$new();
     StatsCtrl = $controller('StatsCtrl', {
       $scope: scope
     });
+
+    // stub google analytics
+    $window.ga = function(){};
   }));
 
   it('should set the default ui state', function () {
@@ -115,10 +118,69 @@ describe('Controller: StatsCtrl', function () {
   });
 
   describe('StatsCtrl.getData()', function () {
+    var StatsCtrl,
+      scope,
+      $httpBackend,
+      from,
+      to,
+      json1,
+      json2,
+      json3;
+
+    from = '2013-05-05';
+    to = '2013-12-12';
+
+    json1 = [{foo: 'bar'}];
+    json2 = [{baz: 'foo'}];
+    json3 = [{bar: 'baz'}];
+
+    beforeEach(inject(function ($controller, $rootScope, _$httpBackend_, apis) {
+      // mock the ajax calls
+      $httpBackend = _$httpBackend_;
+
+      $httpBackend
+        .expectGET(apis.urls.fitbit.sleepAwakenings + '/' + from + '/' + to)
+        .respond({"sleep-awakeningsCount":json1});
+
+      $httpBackend
+        .expectGET(apis.urls.fitbit.sleepTimeToSleep + '/' + from + '/' + to)
+        .respond({"sleep-minutesToFallAsleep":json2});
+
+      $httpBackend
+        .expectGET(apis.urls.fitbit.sleepTimeInBed + '/' + from + '/' + to)
+        .respond({"sleep-timeInBed":json3});
+
+      scope = $rootScope.$new();
+
+      StatsCtrl = $controller('StatsCtrl', {
+        $scope: scope
+      });
+    }));
+
     it('should call scope.setUIToLoading()', function () {
+      spyOn(scope, 'setUIToLoading');
+
+      scope.getData(from, to);
+
+      expect(scope.setUIToLoading).toHaveBeenCalled();
     });
 
-    it('should make a bunch of http requests()', function () {
+    it('should make ajax calls and set json results on models', function () {
+      scope.getData(from, to);
+      $httpBackend.flush();
+
+      expect(scope.awakenings).toBe(json1);
+      expect(scope.timeToSleep).toBe(json2);
+      expect(scope.timeInBed).toBe(json3);
+    });
+
+    it('should call scope.setUIToLoaded() after ajax success', function () {
+      spyOn(scope, 'setUIToLoaded');
+
+      scope.getData(from, to);
+      $httpBackend.flush();
+
+      expect(scope.setUIToLoaded).toHaveBeenCalled();
     });
   });
 });
