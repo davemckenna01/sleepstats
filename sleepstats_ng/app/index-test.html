@@ -15,9 +15,9 @@
         <link rel="stylesheet" href="styles/main.css">
         <!-- endbuild -->
 </head>
-  <body ng-app="sleepstatsApp">
+  <!-- <body ng-app="sleepstatsApp"> -->
   <!-- Remove the following in prodn, it's just for E2E testing -->
-  <!-- <body ng-app="sleepstatsAppTest"> -->
+  <body ng-app="sleepstatsAppTest">
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -59,7 +59,6 @@
         <!-- endbuild -->
 
         <!-- Remove the following in prodn, it's just for E2E testing -->
-        <!--
         <script src="bower_components/angular-mocks/angular-mocks.js"></script>
         <script>
           angular.module('sleepstatsAppTest', ['sleepstatsApp', 'ngMockE2E'])
@@ -78,6 +77,5 @@
               $httpBackend.whenGET().passThrough();
             });
         </script>
-          -->
 </body>
 </html>
